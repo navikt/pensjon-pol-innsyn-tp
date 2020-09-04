@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
 import org.springframework.http.HttpStatus.NOT_FOUND
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.ResponseStatus
 
 @ControllerAdvice
@@ -20,6 +21,7 @@ class InnsynExceptionHandler {
 
     @ExceptionHandler(DataIntegrityViolationException::class)
     @ResponseStatus(INTERNAL_SERVER_ERROR)
+    @ResponseBody
     fun sqlException(e: DataIntegrityViolationException): String {
         LOG.error("Error parsing SQL data.", e)
         errorCounter.labels("SQL").inc()
