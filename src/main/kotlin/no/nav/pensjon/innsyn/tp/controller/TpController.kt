@@ -2,9 +2,8 @@ package no.nav.pensjon.innsyn.tp.controller
 
 import no.nav.pensjon.innsyn.common.CONTENT_TYPE_EXCEL
 import no.nav.pensjon.innsyn.tp.service.TpSheetProducer
-import no.nav.security.token.support.core.api.Unprotected
+import no.nav.security.token.support.core.api.Protected
 import org.apache.poi.xssf.streaming.SXSSFWorkbook
-import org.springframework.context.annotation.Profile
 import org.springframework.http.HttpHeaders.CONTENT_DISPOSITION
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestHeader
@@ -14,7 +13,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.servlet.http.HttpServletResponse
 
-@Unprotected //@Protected
+@Protected
 @RestController
 @RequestMapping("/innsyn")
 class TpController(private val worksheetProducer: TpSheetProducer) {
