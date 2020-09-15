@@ -1,10 +1,10 @@
 package no.nav.pensjon.innsyn.common.controller
 
 import io.prometheus.client.Counter
+import no.nav.pensjon.innsyn.common.PersonNotFoundException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.dao.DataIntegrityViolationException
-import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
 import org.springframework.http.HttpStatus.NOT_FOUND
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -15,9 +15,10 @@ import org.springframework.web.bind.annotation.ResponseStatus
 @ControllerAdvice
 class InnsynExceptionHandler {
 
-    @ExceptionHandler(EmptyResultDataAccessException::class)
+    @ExceptionHandler(PersonNotFoundException::class)
     @ResponseStatus(NOT_FOUND)
-    fun emptyResultFromRepository(e: EmptyResultDataAccessException) {/*No body*/}
+    @ResponseBody
+    fun personNotFound() = "Person not found. Verify FNR is correct."
 
     @ExceptionHandler(DataIntegrityViolationException::class)
     @ResponseStatus(INTERNAL_SERVER_ERROR)

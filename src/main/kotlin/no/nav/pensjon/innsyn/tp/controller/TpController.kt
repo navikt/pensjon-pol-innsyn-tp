@@ -22,14 +22,14 @@ class TpController(private val worksheetProducer: TpSheetProducer) {
         get() = "attachment; filename=TP-${SimpleDateFormat("yyyy-MM-dd").format(Date())}"
 
     @GetMapping
-    fun getTpInnsyn(@RequestHeader("pid") pid: Int, response: HttpServletResponse) {
+    fun getTpInnsyn(@RequestHeader("fnr") fnr: String, response: HttpServletResponse) {
         response.apply {
             addHeader("Content-Description", "File Transfer")
             addHeader(CONTENT_DISPOSITION, contentDisposition)
             addHeader("Content-Transfer-Encoding", "binary")
             addHeader("Connection", "Keep-Alive")
             contentType = CONTENT_TYPE_EXCEL
-            SXSSFWorkbook(worksheetProducer.produceWorksheet(pid)).write(outputStream)
+            SXSSFWorkbook(worksheetProducer.produceWorksheet(fnr)).write(outputStream)
         }
     }
 }

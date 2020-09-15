@@ -1,5 +1,6 @@
 package no.nav.pensjon.innsyn.tp.domain
 
+import no.nav.pensjon.innsyn.tp.domain.support.Person
 import no.nav.pensjon.innsyn.tp.domain.support.TssTp
 import java.time.LocalDate
 
@@ -33,10 +34,12 @@ object TpObjects {
             )
     )
 
+    val person = Person(1, "01029312345")
+
     val forhold = listOf(
             Forhold(
                     id = 1,
-                    personId = 1,
+                    personId = person.personId,
                     tssTp = tssTp1,
                     ytelser = ytelser,
                     datoSamtykkeGitt = null,
