@@ -42,7 +42,7 @@ noArg {
 
 tasks {
     withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "13"
+        kotlinOptions.jvmTarget = "14"
     }
     test {
         useJUnitPlatform()
