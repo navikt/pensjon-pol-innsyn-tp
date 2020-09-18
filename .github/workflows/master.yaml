@@ -1,0 +1,42 @@
+name: Release to GitHub Package Registry
+
+on:
+  push:
+    branches: main
+
+jobs:
+  build_and_release:
+    name: Build and release
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '13.x'
+
+      # Build
+      - name: Build
+        run: gradle clean build
+
+      # Build image
+      - name: Create tag
+        run: echo "::set-env name=TAG::$(date "+%Y.%m.%d")-$(git rev-parse --short HEAD)"
+      - name: Build and push docker image
+        uses: docker/build-push-action@v1.1.0
+        with:
+          username: token
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: navikt/pensjon-pol-innsyn-tp/pensjon-pol-innsyn-tp
+          tags: ${{ env.TAG }}
+
+      # Deploy to dev-gcp
+      - name: Deploy to dev-gcp
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: .nais/nais-dev.yaml
+          IMAGE: docker.pkg.github.com/navikt/pensjon-pol-innsyn-tp/pensjon-pol-innsyn-tp:${{ env.TAG }}
+          TEAM: pensjonsamhandling
