@@ -26,6 +26,7 @@ dependencies {
     implementation("org.springframework.boot", "spring-boot-starter-web")
     implementation("org.springframework.boot", "spring-boot-starter-jdbc")
     implementation("org.springframework.boot", "spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot","spring-boot-starter-validation")
     testImplementation(kotlin("test-junit5"))
     testImplementation("com.ninja-squad", "springmockk", "2.0.3")
     testImplementation("no.nav.security", "token-validation-test-support", "1.3.0")
