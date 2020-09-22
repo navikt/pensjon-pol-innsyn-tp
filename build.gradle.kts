@@ -18,6 +18,7 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(kotlin("reflect"))
+    implementation("com.oracle.database.jdbc","ojdbc10","19.7.0.0")
     implementation("io.micrometer", "micrometer-registry-prometheus", "1.5.4")
     implementation("net.logstash.logback", "logstash-logback-encoder", "6.4")
     implementation("no.nav.security", "token-validation-spring", "1.3.0")

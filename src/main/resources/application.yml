@@ -1,6 +1,12 @@
 management:
   endpoint.prometheus.enabled: true
   endpoints.web.exposure.include: prometheus, health
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    continue-on-error: false
 no.nav.security.jwt.issuer.sts:
   discoveryUrl: http://security-token-service/.well-known/openid-configuration
   accepted_audience: preprod.local,srvpensjon
