@@ -11,9 +11,9 @@ spec:
   ingresses:
     - https://pensjon-pol-innsyn-tp.nais.preprod.local
   liveness:
-    path: actuator/health/liveness
+    path: actuator/health
   readiness:
-    path: actuator/health/readiness
+    path: actuator/health
   vault:
     enabled: true
     paths:
