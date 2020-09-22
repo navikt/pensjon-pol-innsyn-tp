@@ -12,10 +12,8 @@ spec:
     - https://pensjon-pol-innsyn-tp.nais.preprod.local
   liveness:
     path: actuator/health/liveness
-    initialDelay: 30
   readiness:
     path: actuator/health/readiness
-    initialDelay: 30
   vault:
     enabled: true
     paths:
@@ -29,7 +27,7 @@ spec:
   resources:
     limits:
       cpu: 1000m
-      memory: 1024Mi
+      memory: 512Mi
     requests:
       cpu: 200m
       memory: 256Mi
