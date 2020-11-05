@@ -12,8 +12,14 @@ spec:
     - https://pensjon-pol-innsyn-tp.nais.preprod.local
   liveness:
     path: actuator/health/liveness
+    initialDelay: 30
+    periodSeconds: 1
+    failureThreshold: 60
   readiness:
     path: actuator/health/readiness
+    initialDelay: 30
+    periodSeconds: 1
+    failureThreshold: 60
   vault:
     enabled: true
     paths:
