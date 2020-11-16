@@ -9,11 +9,11 @@ import no.nav.security.token.support.test.spring.TokenGeneratorConfiguration
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import java.io.ByteArrayInputStream
@@ -21,6 +21,7 @@ import java.io.ByteArrayInputStream
 @SpringBootTest
 @AutoConfigureDataJpa
 @AutoConfigureMockMvc
+@AutoConfigureTestDatabase
 @EnableJwtTokenValidation
 @Import(TokenGeneratorConfiguration::class)
 internal class TpInnsynTest {

@@ -4,7 +4,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 
-@EnableJpaRepositories
+@EnableJpaRepositories("no.nav.pensjon.innsyn.tp.repository")
 @SpringBootApplication
 class TpInnsyn{
     companion object{
