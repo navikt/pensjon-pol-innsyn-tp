@@ -9,6 +9,7 @@ import no.nav.pensjon.innsyn.tp.service.TpSheetProducer
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.test.web.servlet.MockMvc
@@ -17,6 +18,7 @@ import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.FileInputStream
 
+@AutoConfigureDataJpa
 @WebMvcTest(TpController::class)
 internal class TpControllerTest {
     @Autowired
