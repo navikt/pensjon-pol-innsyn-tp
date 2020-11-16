@@ -1,7 +1,6 @@
 package no.nav.pensjon.innsyn.tp.domain
 
 import no.nav.pensjon.innsyn.common.domain.Domain
-import org.springframework.context.annotation.Profile
 import java.time.LocalDate
 import javax.persistence.*
 

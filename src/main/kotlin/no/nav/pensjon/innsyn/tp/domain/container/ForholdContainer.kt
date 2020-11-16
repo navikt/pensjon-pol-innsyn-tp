@@ -2,7 +2,6 @@ package no.nav.pensjon.innsyn.tp.domain.container
 
 import no.nav.pensjon.innsyn.tp.domain.Forhold
 import no.nav.pensjon.innsyn.tp.repository.ForholdRepository
-import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 
 @Component

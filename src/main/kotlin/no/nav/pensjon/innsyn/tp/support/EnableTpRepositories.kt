@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.QueryLookupStrategy
 import java.lang.annotation.Inherited
 import kotlin.reflect.KClass
 
+@Suppress("unused")
 @Target(AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
 @Inherited

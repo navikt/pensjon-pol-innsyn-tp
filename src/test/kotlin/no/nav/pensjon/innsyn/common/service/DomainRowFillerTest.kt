@@ -7,10 +7,11 @@ import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
 class DomainRowFillerTest {
+    @Suppress("MemberVisibilityCanBePrivate")
     object TestObject: Domain{
-        val a = 1.0
-        val b = "b"
-        val c = LocalDate.of(1,1,1)
+        const val a = 1.0
+        const val b = "b"
+        val c: LocalDate = LocalDate.of(1,1,1)
 
         override val fields = setOf(::a,::b,::c)
     }
