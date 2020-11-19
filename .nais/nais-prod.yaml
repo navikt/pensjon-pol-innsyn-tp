@@ -26,7 +26,7 @@ spec:
       - mountPath: /secrets/oracle/tp-registeret
         kvPath: oracle/data/prod/creds/tjenestepensjon-user
       - mountPath: /secrets/oracle/config
-        kvPath: oracle/data/dev/config/tjenestepensjon
+        kvPath: oracle/data/prod/config/tjenestepensjon
   replicas:
     min: 1
     max: 1
