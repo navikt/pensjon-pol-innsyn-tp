@@ -8,5 +8,5 @@ management:
   endpoint.prometheus.enabled: true
   endpoints.web.exposure.include: prometheus, health
 no.nav.security.jwt.issuer.sts:
-  discoveryUrl: https://security-token-service.default.svc.nais.local/.well-known/openid-configuration
+  discoveryUrl: http://security-token-service.default.svc.nais.local/.well-known/openid-configuration
   accepted_audience: preprod.local,srvpensjon
