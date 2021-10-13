@@ -20,13 +20,6 @@ spec:
     initialDelay: 30
     periodSeconds: 1
     failureThreshold: 60
-  vault:
-    enabled: true
-    paths:
-      - mountPath: /secrets/oracle/tp-registeret
-        kvPath: oracle/data/prod/creds/tjenestepensjon-user
-      - mountPath: /secrets/oracle/config
-        kvPath: oracle/data/prod/config/tjenestepensjon
   replicas:
     min: 1
     max: 1

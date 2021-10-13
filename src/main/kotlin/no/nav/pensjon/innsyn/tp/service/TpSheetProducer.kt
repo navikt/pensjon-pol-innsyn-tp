@@ -1,22 +1,19 @@
 package no.nav.pensjon.innsyn.tp.service
 
-import no.nav.pensjon.innsyn.common.PersonNotFoundException
 import no.nav.pensjon.innsyn.common.service.SheetFiller
+import no.nav.pensjon.innsyn.tp.domain.Forhold
 import no.nav.pensjon.innsyn.tp.domain.container.TpContainer
-import no.nav.pensjon.innsyn.tp.repository.PersonRepository
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.springframework.stereotype.Service
+import reactor.core.publisher.Flux
 
 @Service
 class TpSheetProducer(
-        private val containers: List<TpContainer<*>>,
-        private val personRepository: PersonRepository
+    private val containers: List<TpContainer<*>>
 ) {
-    fun produceWorksheet(fnr: String) = personRepository.findByFnr(fnr)?.run {
-        XSSFWorkbook().apply {
-            containers.map { SheetFiller(it) }.forEach {
-                it.populateSheet(personId, this)
-            }
+    fun produceWorksheet(forhold: Flux<Forhold>) = XSSFWorkbook().apply {
+        containers.map { SheetFiller(it) }.forEach {
+            it.populateSheet(forhold, this)
         }
-    } ?: throw PersonNotFoundException()
+    }
 }
