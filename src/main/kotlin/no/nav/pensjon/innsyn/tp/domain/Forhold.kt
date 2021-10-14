@@ -1,5 +1,6 @@
 package no.nav.pensjon.innsyn.tp.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import no.nav.pensjon.innsyn.common.domain.Domain
 import java.time.LocalDate
 
@@ -12,12 +13,13 @@ data class Forhold(
     val datoBrukTom: LocalDate?,
     val ytelser: List<Ytelse>
 ) : Domain {
+    @JsonIgnore
     override val fields = setOf(
-        navn,
-        datoSamtykkeGitt,
-        datoOpprettet,
-        samtykkeSimT,
-        datoBrukFom,
-        datoBrukTom
+        ::navn,
+        ::datoSamtykkeGitt,
+        ::datoOpprettet,
+        ::samtykkeSimT,
+        ::datoBrukFom,
+        ::datoBrukTom
     )
 }

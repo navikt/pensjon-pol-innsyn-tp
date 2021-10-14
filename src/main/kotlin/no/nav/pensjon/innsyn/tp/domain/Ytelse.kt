@@ -1,5 +1,6 @@
 package no.nav.pensjon.innsyn.tp.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import no.nav.pensjon.innsyn.common.domain.Domain
 import java.time.LocalDate
 
@@ -13,14 +14,15 @@ data class Ytelse(
     val datoBrukFom: LocalDate,
     val datoBrukTom: LocalDate?
 ) : Domain {
+    @JsonIgnore
     override val fields = setOf(
-        navn,
-        datoInnmYtelseFom,
-        datoYtelseIverFom,
-        datoYtelseIverTom,
-        datoOpprettet,
-        datoEndret,
-        datoBrukFom,
-        datoBrukTom
+        ::navn,
+        ::datoInnmYtelseFom,
+        ::datoYtelseIverFom,
+        ::datoYtelseIverTom,
+        ::datoOpprettet,
+        ::datoEndret,
+        ::datoBrukFom,
+        ::datoBrukTom
     )
 }

@@ -32,9 +32,7 @@ class TpController(private val worksheetProducer: TpSheetProducer, private val t
             addHeader("Connection", "Keep-Alive")
             contentType = CONTENT_TYPE_EXCEL
             SXSSFWorkbook(
-                worksheetProducer.produceWorksheet(
-                    tpService.getData(fnr, auth)
-                )
+                worksheetProducer.produceWorksheet(tpService.getData(fnr, auth.removePrefix("Bearer ")))
             ).write(outputStream)
         }
     }

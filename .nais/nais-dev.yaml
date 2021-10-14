@@ -10,6 +10,9 @@ spec:
   port: 8080
   ingresses:
     - https://pensjon-pol-innsyn-tp.nais.preprod.local
+  env:
+    - name: SPRING_PROFILES_ACTIVE
+      value: prod
   liveness:
     path: actuator/health/liveness
     initialDelay: 30

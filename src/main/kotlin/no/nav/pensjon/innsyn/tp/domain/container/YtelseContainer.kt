@@ -16,5 +16,5 @@ class YtelseContainer : TpContainer<Ytelse>("Ytelse",
         "DATO_BRUK_FOM",
         "DATO_BRUK_TOM"
     ),
-    { it.flatMapIterable(Forhold::ytelser) }
+    { it.flatMap(Forhold::ytelser) }
 )

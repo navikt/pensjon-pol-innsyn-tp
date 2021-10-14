@@ -11,10 +11,10 @@ import org.springframework.web.server.ResponseStatusException
 import reactor.core.publisher.Mono
 
 @Service
-class TpService(@Value("tp.url") tpURL: String) {
+class TpService(@Value("\${tp.url}") tpURL: String) {
     private val webClient = WebClient.create(tpURL)
 
-    fun getData(fnr: String, auth: String) = webClient.get()
+    fun getData(fnr: String, auth: String): List<Forhold> = webClient.get()
         .uri("/api/pol/$fnr")
         .headers {
             it.setBearerAuth(auth)
@@ -30,4 +30,5 @@ class TpService(@Value("tp.url") tpURL: String) {
             )
         }
         .bodyToFlux<Forhold>()
+        .collectList().block()!!
 }
