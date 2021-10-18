@@ -12,7 +12,7 @@ spec:
     - https://pensjon-pol-innsyn-tp.nais.preprod.local
   env:
     - name: SPRING_PROFILES_ACTIVE
-      value: prod
+      value: dev
   liveness:
     path: actuator/health/liveness
     initialDelay: 30
