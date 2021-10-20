@@ -1,6 +1,5 @@
 package no.nav.pensjon.innsyn.tp.service
 
-import no.nav.pensjon.innsyn.common.PersonNotFoundException
 import no.nav.pensjon.innsyn.tp.domain.Forhold
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus
@@ -20,7 +19,6 @@ class TpService(@Value("\${tp.url}") tpURL: String) {
             it.setBearerAuth(auth)
         }
         .retrieve()
-        .onStatus(HttpStatus.NOT_FOUND::equals) { Mono.error(PersonNotFoundException()) }
         .onStatus({ !it.is2xxSuccessful }) {
             Mono.error(
                 ResponseStatusException(

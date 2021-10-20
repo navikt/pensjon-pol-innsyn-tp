@@ -8,6 +8,7 @@ import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import com.github.tomakehurst.wiremock.matching.EqualToPattern
 import no.nav.pensjon.innsyn.common.CONTENT_TYPE_EXCEL
 import no.nav.pensjon.innsyn.tp.assertEqualsTestData
+import no.nav.pensjon.innsyn.tp.domain.Forhold
 import no.nav.pensjon.innsyn.tp.domain.TpObjects.forhold
 import no.nav.pensjon.innsyn.tp.domain.TpObjects.person
 import no.nav.security.token.support.spring.api.EnableJwtTokenValidation
@@ -54,21 +55,13 @@ internal class TpInnsynTest {
     }
 
     @Test
-    fun `Denies unauthorized`() {
-        mockMvc.get("/innsyn/$person")
-            .andExpect {
-                status { isUnauthorized() }
-            }
-    }
-
-    @Test
     fun `Handles missing data`() {
         Json.getObjectMapper().registerModule(JavaTimeModule())
         val token = JwtTokenGenerator.signedJWTAsString(null)
         stubFor(
             get("/api/pol/0")
                 .withHeader("Authorization", EqualToPattern("Bearer $token"))
-                .willReturn(notFound())
+                .willReturn(okForJson(emptyList<Forhold>()))
         )
         mockMvc.get("/innsyn/0") {
             headers {
@@ -76,9 +69,37 @@ internal class TpInnsynTest {
             }
         }.andExpect {
             status {
-                isNotFound()
-                reason("Person not found. Verify FNR is correct.")
+                isOk()
             }
         }
+    }
+
+    @Test
+    fun `Handles error response`() {
+        Json.getObjectMapper().registerModule(JavaTimeModule())
+        val token = JwtTokenGenerator.signedJWTAsString(null)
+        stubFor(
+            get("/api/pol/1")
+                .withHeader("Authorization", EqualToPattern("Bearer $token"))
+                .willReturn(serviceUnavailable())
+        )
+        mockMvc.get("/innsyn/1") {
+            headers {
+                setBearerAuth(token)
+            }
+        }.andExpect {
+            status {
+                isBadGateway()
+                reason("Error fetching data from TP. Status code: 503 SERVICE_UNAVAILABLE")
+            }
+        }
+    }
+
+    @Test
+    fun `Denies unauthorized`() {
+        mockMvc.get("/innsyn/$person")
+            .andExpect {
+                status { isUnauthorized() }
+            }
     }
 }

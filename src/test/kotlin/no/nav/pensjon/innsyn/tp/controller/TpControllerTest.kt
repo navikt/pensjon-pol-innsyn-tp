@@ -3,7 +3,6 @@ package no.nav.pensjon.innsyn.tp.controller
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import no.nav.pensjon.innsyn.common.CONTENT_TYPE_EXCEL
-import no.nav.pensjon.innsyn.common.PersonNotFoundException
 import no.nav.pensjon.innsyn.tp.assertEqualsTestData
 import no.nav.pensjon.innsyn.tp.domain.TpObjects.forhold
 import no.nav.pensjon.innsyn.tp.service.TpService
@@ -43,20 +42,5 @@ internal class TpControllerTest {
         }.andReturn().response.run {
             XSSFWorkbook(ByteArrayInputStream(contentAsByteArray))
         }.assertEqualsTestData()
-    }
-
-    @Test
-    fun `Returns 404 on missing object`() {
-        every { tpService.getData("1", "") } throws PersonNotFoundException()
-        mockMvc.get("/innsyn/1") {
-            headers {
-                setBearerAuth("")
-            }
-        }.andExpect {
-            status {
-                isNotFound()
-                reason("Person not found. Verify FNR is correct.")
-            }
-        }
     }
 }
