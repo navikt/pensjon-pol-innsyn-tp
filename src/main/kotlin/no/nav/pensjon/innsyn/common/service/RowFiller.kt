@@ -4,7 +4,8 @@ import org.apache.poi.ss.usermodel.CellStyle
 import org.apache.poi.ss.usermodel.Sheet
 import java.time.LocalDate
 
-class RowFiller internal constructor(sheet: Sheet, private val dateCellStyle: CellStyle, rowIndex: Int) : CellValueSetter {
+class RowFiller internal constructor(sheet: Sheet, private val dateCellStyle: CellStyle, rowIndex: Int) :
+    CellValueSetter {
     private val row = sheet.createRow(rowIndex)
     override fun setCellValue(cellIndex: Int, value: Boolean) {
         row.createCell(cellIndex).setCellValue(if (value) "ja" else "nei")

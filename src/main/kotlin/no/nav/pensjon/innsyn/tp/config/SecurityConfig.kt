@@ -7,4 +7,4 @@ import org.springframework.context.annotation.Profile
 @EnableJwtTokenValidation
 @Profile("!test")
 @Configuration
-class TpConfig
+class SecurityConfig

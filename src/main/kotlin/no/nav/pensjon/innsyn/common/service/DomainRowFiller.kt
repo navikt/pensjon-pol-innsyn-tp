@@ -5,15 +5,15 @@ import java.time.LocalDate
 
 class DomainRowFiller<T : Domain> {
     fun setCellValues(sink: CellValueSetter, source: T) =
-            source.fields.forEachIndexed { i, p ->
-                when (val v = p.call()) {
-                    is String -> sink.setCellValue(i, v)
-                    is Double -> sink.setCellValue(i, v)
-                    is Int -> sink.setCellValue(i, v.toDouble())
-                    is LocalDate -> sink.setCellValue(i, v)
-                    is Boolean -> sink.setCellValue(i, v)
-                    null -> sink.setCellValue(i, "")
-                    else -> throw RuntimeException()
-                }
+        source.fields.forEachIndexed { i, f ->
+            when (val p = f.call()) {
+                is String -> sink.setCellValue(i, p)
+                is Double -> sink.setCellValue(i, p)
+                is Int -> sink.setCellValue(i, p.toDouble())
+                is LocalDate -> sink.setCellValue(i, p)
+                is Boolean -> sink.setCellValue(i, p)
+                null -> sink.setCellValue(i, "")
+                else -> throw RuntimeException()
             }
+        }
 }

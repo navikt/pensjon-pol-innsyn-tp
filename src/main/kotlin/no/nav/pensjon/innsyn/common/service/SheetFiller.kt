@@ -8,20 +8,20 @@ import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
 
-class SheetFiller<T : Domain> internal constructor(
-        private val container: DomainContainer<T>
+class SheetFiller<X : Domain, T : Domain> internal constructor(
+    private val container: DomainContainer<X, T>
 ) {
 
-    fun populateSheet(pid: Int, workbook: Workbook) {
+    fun populateSheet(domain: List<X>, workbook: Workbook) {
         val sheet = workbook.createSheet(container.entityName)
         createHeaderRow(sheet, createHeaderCellStyle(workbook))
-        createRows(pid, sheet, createDateCellStyle(workbook))
+        createRows(domain, sheet, createDateCellStyle(workbook))
         fitColumnsToContentSize(sheet)
     }
 
-    private fun createRows(pid: Int, sheet: Sheet, dateCellStyle: CellStyle) {
-        container.source(pid).forEachIndexed { i, e ->
-            container.rowFiller(RowFiller(sheet, dateCellStyle, i + 1), e)
+    private fun createRows(domain: List<X>, sheet: Sheet, dateCellStyle: CellStyle) {
+        container.map(domain).forEachIndexed { i, o ->
+            container.rowFiller(RowFiller(sheet, dateCellStyle, i + 1), o)
         }
     }
 
