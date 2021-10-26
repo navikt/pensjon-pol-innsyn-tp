@@ -42,11 +42,11 @@ jobs:
           TEAM: pensjonsamhandling
 
       # Deploy to prod-fss
-      - name: Deploy to prod-fss
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: prod-fss
-          RESOURCE: .nais/nais-prod.yaml
-          IMAGE: docker.pkg.github.com/navikt/pensjon-pol-innsyn-tp/pensjon-pol-innsyn-tp:${{ env.TAG }}
-          TEAM: pensjonsamhandling
+#      - name: Deploy to prod-fss
+#        uses: nais/deploy/actions/deploy@v1
+#        env:
+#          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+#          CLUSTER: prod-fss
+#          RESOURCE: .nais/nais-prod.yaml
+#          IMAGE: docker.pkg.github.com/navikt/pensjon-pol-innsyn-tp/pensjon-pol-innsyn-tp:${{ env.TAG }}
+#          TEAM: pensjonsamhandling
