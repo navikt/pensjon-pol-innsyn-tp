@@ -1,8 +1,8 @@
-package no.nav.pensjon.innsyn.common.service
+package no.nav.pensjon.innsyn.tp.service
 
 import io.mockk.mockk
 import io.mockk.verifySequence
-import no.nav.pensjon.innsyn.common.domain.Domain
+import no.nav.pensjon.innsyn.tp.domain.Domain
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 

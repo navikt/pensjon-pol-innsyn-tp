@@ -1,4 +1,4 @@
-package no.nav.pensjon.innsyn.common.domain
+package no.nav.pensjon.innsyn.tp.domain
 
 import kotlin.reflect.KProperty
 

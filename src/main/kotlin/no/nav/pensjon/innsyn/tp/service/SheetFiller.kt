@@ -1,7 +1,7 @@
-package no.nav.pensjon.innsyn.common.service
+package no.nav.pensjon.innsyn.tp.service
 
-import no.nav.pensjon.innsyn.common.domain.Domain
-import no.nav.pensjon.innsyn.common.domain.DomainContainer
+import no.nav.pensjon.innsyn.tp.domain.Domain
+import no.nav.pensjon.innsyn.tp.domain.DomainContainer
 import org.apache.poi.ss.usermodel.CellStyle
 import org.apache.poi.ss.usermodel.IndexedColors.RED
 import org.apache.poi.ss.usermodel.Row

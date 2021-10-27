@@ -1,7 +1,7 @@
-package no.nav.pensjon.innsyn.common.domain
+package no.nav.pensjon.innsyn.tp.domain
 
-import no.nav.pensjon.innsyn.common.service.CellValueSetter
-import no.nav.pensjon.innsyn.common.service.DomainRowFiller
+import no.nav.pensjon.innsyn.tp.service.CellValueSetter
+import no.nav.pensjon.innsyn.tp.service.DomainRowFiller
 
 abstract class DomainContainer<X : Any, T : Domain>(
     val entityName: String,

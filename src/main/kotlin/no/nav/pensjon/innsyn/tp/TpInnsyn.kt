@@ -1,4 +1,4 @@
-package no.nav.pensjon.innsyn
+package no.nav.pensjon.innsyn.tp
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

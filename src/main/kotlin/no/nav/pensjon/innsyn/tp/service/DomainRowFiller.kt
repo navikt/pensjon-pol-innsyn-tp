@@ -1,6 +1,6 @@
-package no.nav.pensjon.innsyn.common.service
+package no.nav.pensjon.innsyn.tp.service
 
-import no.nav.pensjon.innsyn.common.domain.Domain
+import no.nav.pensjon.innsyn.tp.domain.Domain
 import java.time.LocalDate
 
 class DomainRowFiller<T : Domain> {

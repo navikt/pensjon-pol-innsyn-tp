@@ -1,6 +1,6 @@
 package no.nav.pensjon.innsyn.tp.controller
 
-import no.nav.pensjon.innsyn.common.CONTENT_TYPE_EXCEL
+import no.nav.pensjon.innsyn.tp.CONTENT_TYPE_EXCEL
 import no.nav.pensjon.innsyn.tp.service.TpService
 import no.nav.pensjon.innsyn.tp.service.TpSheetProducer
 import no.nav.security.token.support.core.api.Protected

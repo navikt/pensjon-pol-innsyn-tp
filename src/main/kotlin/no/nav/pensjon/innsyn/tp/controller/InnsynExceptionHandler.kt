@@ -1,4 +1,4 @@
-package no.nav.pensjon.innsyn.common.controller
+package no.nav.pensjon.innsyn.tp.controller
 
 import io.prometheus.client.Counter
 import org.slf4j.Logger

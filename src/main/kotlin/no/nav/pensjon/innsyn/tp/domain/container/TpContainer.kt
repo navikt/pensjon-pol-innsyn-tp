@@ -1,7 +1,7 @@
 package no.nav.pensjon.innsyn.tp.domain.container
 
-import no.nav.pensjon.innsyn.common.domain.Domain
-import no.nav.pensjon.innsyn.common.domain.DomainContainer
+import no.nav.pensjon.innsyn.tp.domain.Domain
+import no.nav.pensjon.innsyn.tp.domain.DomainContainer
 import no.nav.pensjon.innsyn.tp.domain.Forhold
 
 abstract class TpContainer<T : Domain>(

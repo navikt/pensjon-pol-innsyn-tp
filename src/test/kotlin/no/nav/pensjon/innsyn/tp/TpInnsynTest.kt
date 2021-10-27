@@ -1,4 +1,4 @@
-package no.nav.pensjon.innsyn
+package no.nav.pensjon.innsyn.tp
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder.okForJson
@@ -6,7 +6,7 @@ import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.common.Json
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import com.github.tomakehurst.wiremock.matching.EqualToPattern
-import no.nav.pensjon.innsyn.common.CONTENT_TYPE_EXCEL
+import no.nav.pensjon.innsyn.tp.CONTENT_TYPE_EXCEL
 import no.nav.pensjon.innsyn.tp.assertEqualsTestData
 import no.nav.pensjon.innsyn.tp.domain.Forhold
 import no.nav.pensjon.innsyn.tp.domain.TpObjects.forhold

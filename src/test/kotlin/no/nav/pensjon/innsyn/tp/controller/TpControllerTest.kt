@@ -2,7 +2,7 @@ package no.nav.pensjon.innsyn.tp.controller
 
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
-import no.nav.pensjon.innsyn.common.CONTENT_TYPE_EXCEL
+import no.nav.pensjon.innsyn.tp.CONTENT_TYPE_EXCEL
 import no.nav.pensjon.innsyn.tp.assertEqualsTestData
 import no.nav.pensjon.innsyn.tp.domain.TpObjects.forhold
 import no.nav.pensjon.innsyn.tp.service.TpService
