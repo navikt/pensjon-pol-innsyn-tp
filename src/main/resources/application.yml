@@ -1,6 +1,10 @@
 management:
   endpoint.prometheus.enabled: true
   endpoints.web.exposure.include: prometheus, health
-no.nav.security.jwt.issuer.sts:
-  discoveryUrl: http://security-token-service.default.svc.nais.local/.well-known/openid-configuration
-  accepted_audience: preprod.local,srvpensjon
+spring.security.oauth2.client.registration.isso:
+  authorization-grant-type: authorization_code
+  client-id: ${client uuid}
+  client-name: ISSO
+  client-secret: ${client secret}
+  provider: isso
+  scope: openid
