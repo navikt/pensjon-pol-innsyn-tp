@@ -3,8 +3,8 @@ management:
   endpoints.web.exposure.include: prometheus, health
 spring.security.oauth2.client.registration.isso:
   authorization-grant-type: authorization_code
-  client-id: ${client uuid}
+  client-id: nais.io/azure/AZURE_APP_CLIENT_ID
   client-name: ISSO
-  client-secret: ${client secret}
+  client-secret: nais.io/azure/AZURE_APP_CLIENT_SECRET
   provider: isso
   scope: openid
