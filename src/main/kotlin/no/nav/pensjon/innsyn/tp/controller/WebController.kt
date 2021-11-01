@@ -18,4 +18,7 @@ class WebController {
         @RegisteredOAuth2AuthorizedClient authorizedClient: OAuth2AuthorizedClient,
         @AuthenticationPrincipal principal: OAuth2User
     ) = "index"
+
+    @GetMapping("/user")
+    fun user(@AuthenticationPrincipal principal: OAuth2User) = mapOf<String, Any>("name" to principal.getAttribute("name"))
 }
