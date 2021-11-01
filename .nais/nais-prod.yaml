@@ -10,6 +10,15 @@ spec:
   port: 8080
   ingresses:
     - https://pensjon-pol-innsyn-tp.nais.adeo.no
+  azure:
+    application:
+      enabled: true
+      claims:
+        extra:
+          - NAVident
+    sidecar:
+      enabled: true
+      autoLogin: false
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: prod
