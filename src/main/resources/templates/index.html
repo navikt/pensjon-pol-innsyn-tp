@@ -36,11 +36,7 @@
 </script>
 <script>
     function logout() {
-        $.post("/logout", function() {
-            $("#user").html('');
-            $(".unauthenticated").show();
-            $(".authenticated").hide();
-        })
+        $.post("/logout")
         return true;
     }
     function download(fnr) {
