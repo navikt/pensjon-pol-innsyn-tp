@@ -15,7 +15,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
         http.run {
             authorizeRequests().anyRequest().authenticated()
             oauth2Login()
-            logout()
+            logout().logoutSuccessUrl("/")
         }
     }
 }
