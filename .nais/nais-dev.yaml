@@ -17,8 +17,7 @@ spec:
         extra:
           - NAVident
     sidecar:
-      enabled: true
-      autoLogin: false
+      enabled: false
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: dev

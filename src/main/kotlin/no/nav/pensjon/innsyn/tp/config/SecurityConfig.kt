@@ -13,10 +13,12 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
         http.run {
-            authorizeRequests().anyRequest().authenticated()
+            authorizeRequests()
                 .antMatchers("/actuator/**").permitAll()
+                .anyRequest().authenticated()
             oauth2Login()
             logout().logoutSuccessUrl("/")
+            oauth2ResourceServer().jwt()
         }
     }
 }
