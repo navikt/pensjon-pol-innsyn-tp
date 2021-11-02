@@ -14,6 +14,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http.run {
             authorizeRequests().anyRequest().authenticated()
+                .antMatchers("/actuator/**").permitAll()
             oauth2Login()
             logout().logoutSuccessUrl("/")
         }

@@ -1,2 +1,1 @@
 tp.url: https://tp.nais.adeo.no
-spring.security.oauth2.client.provider.isso.issuer-uri: https://isso.adeo.no:443/isso/oauth2
