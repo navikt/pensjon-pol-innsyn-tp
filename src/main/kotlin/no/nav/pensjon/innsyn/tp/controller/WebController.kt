@@ -18,7 +18,7 @@ class WebController {
         @RegisteredOAuth2AuthorizedClient authorizedClient: OAuth2AuthorizedClient,
         @AuthenticationPrincipal principal: OAuth2User
     ): String {
-        model.addAttribute("user", principal.getAttribute("name"))
+        model.addAttribute("user", principal.name)
         return "index"
     }
 }
