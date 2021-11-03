@@ -18,7 +18,6 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                 .anyRequest().authenticated()
             oauth2Login()
             logout().logoutSuccessUrl("/")
-            oauth2ResourceServer().jwt()
         }
     }
 }
