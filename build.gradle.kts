@@ -28,6 +28,7 @@ dependencies {
     implementation("org.springframework.boot", "spring-boot-starter-actuator")
     implementation("org.springframework.boot", "spring-boot-starter-validation")
     implementation("org.springframework.boot", "spring-boot-starter-oauth2-client")
+    implementation("org.springframework.boot", "spring-boot-starter-thymeleaf")
     implementation("org.springframework.cloud", "spring-cloud-starter-contract-stub-runner", "3.0.4")
     testImplementation(kotlin("test-junit5"))
     testImplementation("com.github.tomakehurst", "wiremock-jre8", "2.31.0")
