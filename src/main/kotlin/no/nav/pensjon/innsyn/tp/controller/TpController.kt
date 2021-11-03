@@ -5,6 +5,8 @@ import no.nav.pensjon.innsyn.tp.service.TpService
 import no.nav.pensjon.innsyn.tp.service.TpSheetProducer
 import org.apache.poi.xssf.streaming.SXSSFWorkbook
 import org.springframework.http.HttpHeaders.CONTENT_DISPOSITION
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient
+import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient
 import org.springframework.web.bind.annotation.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -20,9 +22,12 @@ class TpController(private val worksheetProducer: TpSheetProducer, private val t
     @GetMapping
     fun getTpInnsyn(
         @PathVariable("fnr") fnr: String,
-        @RequestHeader("authorization") auth: String,
+        @RegisteredOAuth2AuthorizedClient authorizedClient: OAuth2AuthorizedClient,
         response: HttpServletResponse
     ) {
+        // TODO: Use on behalf of flow and replace token with token for TP
+        val forhold = tpService.getData(fnr, authorizedClient.accessToken.tokenValue)
+
         response.apply {
             addHeader("Content-Description", "File Transfer")
             addHeader(CONTENT_DISPOSITION, contentDisposition)
@@ -30,7 +35,7 @@ class TpController(private val worksheetProducer: TpSheetProducer, private val t
             addHeader("Connection", "Keep-Alive")
             contentType = CONTENT_TYPE_EXCEL
             SXSSFWorkbook(
-                worksheetProducer.produceWorksheet(tpService.getData(fnr, auth.removePrefix("Bearer ")))
+                worksheetProducer.produceWorksheet(forhold)
             ).write(outputStream)
         }
     }
