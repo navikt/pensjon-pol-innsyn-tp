@@ -32,7 +32,7 @@ jobs:
           tags: ${{ env.TAG }}
 
       # Deploy to dev-fss
-      - name: Deploy to dev-fss
+      - name: Deploy to dev-gcp
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
@@ -42,7 +42,7 @@ jobs:
           TEAM: pensjonsamhandling
 
       # Deploy to prod-fss
-#      - name: Deploy to prod-fss
+#      - name: Deploy to prod-gcp
 #        uses: nais/deploy/actions/deploy@v1
 #        env:
 #          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}

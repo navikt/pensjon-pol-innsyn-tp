@@ -54,6 +54,8 @@ services:
       interval: 5s
       retries: 30
       timeout: 3s
+    ports:
+      - "8080:8080"
     mem_limit: 400m
     environment:
       SPRING_DATASOURCE_URL: jdbc:oracle:thin:@oracle:1521/tjpen

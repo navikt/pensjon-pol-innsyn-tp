@@ -1,3 +1,3 @@
 spring.security.oauth2.client:
   provider.azure.issuer-uri: ${AZURE_OPENID_CONFIG_ISSUER}
-tp.url: https://tp.nais.adeo.no
+tp.url: https://tp-api.prod-fss-pub.nais.io
