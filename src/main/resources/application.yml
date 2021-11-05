@@ -1,6 +1,11 @@
 management:
   endpoint.prometheus.enabled: true
   endpoints.web.exposure.include: prometheus, health
-no.nav.security.jwt.issuer.sts:
-  discoveryUrl: http://security-token-service.default.svc.nais.local/.well-known/openid-configuration
-  accepted_audience: preprod.local,srvpensjon
+spring.security.oauth2.client:
+  registration.azure:
+    authorization-grant-type: authorization_code
+    client-id: ${AZURE_APP_CLIENT_ID}
+    client-name: Azure
+    client-secret: ${AZURE_APP_CLIENT_SECRET}
+    provider: azure
+    scope: openid

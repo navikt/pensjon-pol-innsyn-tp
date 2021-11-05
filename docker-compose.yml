@@ -1,0 +1,84 @@
+version: "2.4"
+services:
+  oracle:
+    image: ghcr.io/navikt/pensjon-oracle/oracle-database-18.4.0-xe-with-pesys-flyway:2021.05.09-14.04-8c363d0a886c
+    ports:
+      - "1521:1521"
+    healthcheck:
+      test: echo "select * from v\$$database;" | sqlplus -S sys/oracle as sysdba && lsnrctl status | grep -q tjpen || exit 1
+      interval: 5s
+      retries: 30
+      timeout: 3s
+    mem_limit: 3g
+
+  mongodb:
+    image: mongo:4.4
+    healthcheck:
+      test: echo 'db.stats().ok' | mongo localhost:27017/test --quiet
+      interval: 5s
+      retries: 30
+      timeout: 3s
+    ports:
+      - "27017:27017"
+    mem_limit: 200m
+
+  vtp-pensjon:
+    image: ghcr.io/navikt/vtp-pensjon/vtp-pensjon:2021.11.03-08.31-9e91227c020a
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    healthcheck:
+      test: curl -s http://localhost:8060/ping > /dev/null
+      interval: 5s
+      retries: 30
+      timeout: 3s
+    ports:
+      - "8060:8060" # HTTP
+      - "8389:8389" # LDAP
+    mem_limit: 500m
+    environment:
+      PENSJON_TESTDATA_URL: ""
+      SPRING_DATA_MONGODB_HOST: mongodb
+
+  tjenestepensjon:
+    image: ghcr.io/navikt/tp/tp-nais:2021.11.02-df864f5
+    entrypoint:
+      - "/run-java.sh"
+    depends_on:
+      vtp-pensjon:
+        condition: service_healthy
+      oracle:
+        condition: service_healthy
+    healthcheck:
+      test: wget -t 1 -O- -q http://localhost:8080/actuator/health > /dev/null
+      interval: 5s
+      retries: 30
+      timeout: 3s
+    ports:
+      - "8080:8080"
+    mem_limit: 400m
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:oracle:thin:@oracle:1521/tjpen
+      SPRING_DATASOURCE_USERNAME: tjpen
+      SPRING_DATASOURCE_PASSWORD: tjpenpassword
+      SPRING_FLYWAY_ENABLED: "true"
+      SPRING_LDAP_URLS: ldap://vtp-pensjon:8389
+      SPRING_LDAP_BASE: dc=test,dc=local
+      SPRING_LDAP_USERNAME: ""
+      SPRING_LDAP_PASSWORD: ""
+      MICROSOFTGRAPH_BASE_URL: http://vtp-pensjon:8060/rest/MicrosoftGraphApi
+      OAUTH2_AZUREAD_CLIENTID: tp
+      OAUTH2_AZUREAD_CLIENTSECRET: dummy
+      OAUTH2_AZUREAD_ISSUER: https://login.microsoftonline.com/vtp-pensjon/v2.0
+      OAUTH2_AZUREAD_JWKSETURI: http://vtp-pensjon:8060/rest/AzureAd/vtp-pensjon/discovery/v2.0/keys
+      OAUTH2_AZUREAD_TOKENENDPOINT: http://vtp-pensjon:8060/rest/AzureAd/vtp-pensjon/oauth2/v2.0/token
+      OAUTH2_MASKINPORTEN_ISSUER: vtp-maskinporten-issuer
+      OAUTH2_MASKINPORTEN_JWKSETURI: http://vtp-pensjon:8060/rest/maskinporten/jwk
+      OAUTH2_ISSO_ISSUER: vtp-pensjon-issuer
+      OAUTH2_ISSO_JWKSETURI: http://vtp-pensjon:8060/rest/isso/oauth2/connect/jwk_uri
+      OAUTH2_STS_ISSUER: vtp-pensjon-sts-issuer
+      OAUTH2_STS_JWKSETURI: http://vtp-pensjon:8060/rest/isso/oauth2/connect/jwk_uri
+      SERVICETOKENSERVICE_URI: http://vtp-pensjon:8060
+      SERVICEUSER_USERNAME: srvtp
+      SERVICEUSER_PASSWORD: password
+      TJENESTEBUSS_URL: http://vtp-pensjon:8060/soap/esb/

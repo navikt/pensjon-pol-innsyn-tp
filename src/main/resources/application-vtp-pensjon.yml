@@ -1,0 +1,18 @@
+management:
+  endpoint.prometheus.enabled: true
+  endpoints.web.exposure.include: prometheus, health
+spring.security.oauth2.client:
+  provider.azure.authorization-uri: http://localhost:8060/rest/AzureAd/vtp-pensjon/v2.0/authorize
+  provider.azure.jwk-set-uri: http://localhost:8060/rest/AzureAd/vtp-pensjon/discovery/v2.0/keys
+  provider.azure.token-uri: http://localhost:8060/rest/AzureAd/vtp-pensjon/oauth2/v2.0/token
+  registration.azure:
+    authorization-grant-type: authorization_code
+    client-id: pol-innsyn
+    client-name: azure
+    client-secret: dummy
+    provider: azure
+    scope: openid
+    redirect-uri: http://localhost:8082//login/oauth2/code/azure
+tp.url: http://localhost:8080
+server:
+  port: 8082

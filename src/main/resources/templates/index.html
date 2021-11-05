@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>POL-Innsyn-TP</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div class="container authenticated">
+    <form action="/logout">
+        <label>User:
+            <span th:text="${user}"></span>
+        </label>
+        <div>
+            <button type="submit" class="btn btn-primary">Logout</button>
+        </div>
+    </form>
+</div>
+<br>
+<br>
+<div style="display: table; margin: 0 auto">
+    <form method="get" action="javascript:download(fnr.value)">
+        <label><b>Innsyn:</b>
+            <br>
+            <input type="text" id="fnr" name="fnr"
+                   title="11-digit number. Ex: 12345678910" placeholder="Fødselsnummer"
+                   pattern="\d{11}" required>
+            <input type="submit" value="Download">
+        </label>
+    </form>
+    <br>
+    <a id="dlink">
+        <script>
+            function download(fnr) {
+                let link = document.getElementById('dlink');
+                link.href = 'api/innsyn/' + fnr
+                link.download = fnr + '.xlsx'
+                link.innerText = fnr + '.xlsx'
+                link.dispatchEvent(new MouseEvent('click'));
+            }
+        </script>
+    </a>
+</div>
+</body>
+</html>

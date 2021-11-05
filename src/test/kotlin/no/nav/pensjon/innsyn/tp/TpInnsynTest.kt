@@ -6,20 +6,16 @@ import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.common.Json
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import com.github.tomakehurst.wiremock.matching.EqualToPattern
-import no.nav.pensjon.innsyn.tp.CONTENT_TYPE_EXCEL
-import no.nav.pensjon.innsyn.tp.assertEqualsTestData
 import no.nav.pensjon.innsyn.tp.domain.Forhold
 import no.nav.pensjon.innsyn.tp.domain.TpObjects.forhold
 import no.nav.pensjon.innsyn.tp.domain.TpObjects.person
-import no.nav.security.token.support.spring.api.EnableJwtTokenValidation
-import no.nav.security.token.support.test.JwtTokenGenerator
-import no.nav.security.token.support.test.spring.TokenGeneratorConfiguration
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.context.annotation.Import
+import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import java.io.ByteArrayInputStream
@@ -27,77 +23,65 @@ import java.io.ByteArrayInputStream
 @SpringBootTest
 @WireMockTest(httpPort = 8089)
 @AutoConfigureMockMvc
-@EnableJwtTokenValidation
-@Import(TokenGeneratorConfiguration::class)
 internal class TpInnsynTest {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
-    @Test
-    fun `Generates TP worksheet`() {
+    @BeforeEach
+    fun setup() {
         Json.getObjectMapper().registerModule(JavaTimeModule())
-        val token = JwtTokenGenerator.signedJWTAsString(null)
+    }
+
+    @Test
+    @WithMockUser
+    fun `Generates TP worksheet`() {
         stubFor(
             get("/api/pol/$person")
-                .withHeader("Authorization", EqualToPattern("Bearer $token"))
                 .willReturn(okForJson(forhold))
         )
-        mockMvc.get("/innsyn/$person") {
-            headers {
-                setBearerAuth(token)
-            }
-        }.andExpect {
-            status { isOk() }
-            content { contentType(CONTENT_TYPE_EXCEL) }
-        }.andReturn().response.run {
-            XSSFWorkbook(ByteArrayInputStream(contentAsByteArray))
-        }.assertEqualsTestData()
+        mockMvc.get("/api/innsyn/$person")
+            .andExpect {
+                status { isOk() }
+                content { contentType(CONTENT_TYPE_EXCEL) }
+            }.andReturn().response.run {
+                XSSFWorkbook(ByteArrayInputStream(contentAsByteArray))
+            }.assertEqualsTestData()
     }
 
     @Test
+    @WithMockUser
     fun `Handles missing data`() {
-        Json.getObjectMapper().registerModule(JavaTimeModule())
-        val token = JwtTokenGenerator.signedJWTAsString(null)
         stubFor(
             get("/api/pol/0")
-                .withHeader("Authorization", EqualToPattern("Bearer $token"))
                 .willReturn(okForJson(emptyList<Forhold>()))
         )
-        mockMvc.get("/innsyn/0") {
-            headers {
-                setBearerAuth(token)
+        mockMvc.get("/api/innsyn/0")
+            .andExpect {
+                status {
+                    isOk()
+                }
             }
-        }.andExpect {
-            status {
-                isOk()
-            }
-        }
     }
 
     @Test
+    @WithMockUser
     fun `Handles error response`() {
-        Json.getObjectMapper().registerModule(JavaTimeModule())
-        val token = JwtTokenGenerator.signedJWTAsString(null)
         stubFor(
             get("/api/pol/1")
-                .withHeader("Authorization", EqualToPattern("Bearer $token"))
                 .willReturn(serviceUnavailable())
         )
-        mockMvc.get("/innsyn/1") {
-            headers {
-                setBearerAuth(token)
+        mockMvc.get("/api/innsyn/1")
+            .andExpect {
+                status {
+                    isBadGateway()
+                    reason("Error fetching data from TP. Status code: 503 SERVICE_UNAVAILABLE")
+                }
             }
-        }.andExpect {
-            status {
-                isBadGateway()
-                reason("Error fetching data from TP. Status code: 503 SERVICE_UNAVAILABLE")
-            }
-        }
     }
 
     @Test
     fun `Denies unauthorized`() {
-        mockMvc.get("/innsyn/$person")
+        mockMvc.get("/api/innsyn/$person")
             .andExpect {
                 status { isUnauthorized() }
             }
