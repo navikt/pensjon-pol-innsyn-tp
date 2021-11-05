@@ -33,6 +33,7 @@ dependencies {
     testImplementation(kotlin("test-junit5"))
     testImplementation("com.github.tomakehurst", "wiremock-jre8", "2.31.0")
     testImplementation("com.ninja-squad", "springmockk", "3.0.1")
+    testImplementation("no.nav.security", "mock-oauth2-server", "0.4.0")
     testImplementation("org.springframework.boot", "spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
         exclude(module = "mockito-core")
