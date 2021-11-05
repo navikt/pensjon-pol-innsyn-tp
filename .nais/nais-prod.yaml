@@ -16,8 +16,6 @@ spec:
       claims:
         extra:
           - NAVident
-    sidecar:
-      enabled: false
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: prod
