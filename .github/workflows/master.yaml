@@ -36,7 +36,7 @@ jobs:
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-fss
+          CLUSTER: dev-gcp
           RESOURCE: .nais/nais-dev.yaml
           IMAGE: docker.pkg.github.com/navikt/pensjon-pol-innsyn-tp/pensjon-pol-innsyn-tp:${{ env.TAG }}
           TEAM: pensjonsamhandling
@@ -46,7 +46,7 @@ jobs:
 #        uses: nais/deploy/actions/deploy@v1
 #        env:
 #          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-#          CLUSTER: prod-fss
+#          CLUSTER: prod-gcp
 #          RESOURCE: .nais/nais-prod.yaml
 #          IMAGE: docker.pkg.github.com/navikt/pensjon-pol-innsyn-tp/pensjon-pol-innsyn-tp:${{ env.TAG }}
 #          TEAM: pensjonsamhandling
