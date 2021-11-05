@@ -31,7 +31,7 @@ jobs:
           repository: navikt/pensjon-pol-innsyn-tp/pensjon-pol-innsyn-tp
           tags: ${{ env.TAG }}
 
-      # Deploy to dev-fss
+      # Deploy to dev-gcp
       - name: Deploy to dev-gcp
         uses: nais/deploy/actions/deploy@v1
         env:
@@ -41,7 +41,7 @@ jobs:
           IMAGE: docker.pkg.github.com/navikt/pensjon-pol-innsyn-tp/pensjon-pol-innsyn-tp:${{ env.TAG }}
           TEAM: pensjonsamhandling
 
-      # Deploy to prod-fss
+      # Deploy to prod-gcp
 #      - name: Deploy to prod-gcp
 #        uses: nais/deploy/actions/deploy@v1
 #        env:
