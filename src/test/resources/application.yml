@@ -1,15 +1,15 @@
 logging.level.org.springframework.jdbc.datasource.init.ScriptUtils: DEBUG
 tp.url: http://localhost:8089
 spring.security.oauth2.client:
-  provider.localhost:
-    authorization-uri: mock-oauth2-server.baseUrl/issuer1/authorize
-    token-uri: mock-oauth2-server.baseUrl/issuer1/token
-    jwk-set-uri: mock-oauth2-server.baseUrl/issuer1/jwks
-  registration.localhost:
+  provider.azure:
+    authorization-uri: test
+    jwk-set-uri: test
+    token-uri: test
+  registration.azure:
     authorization-grant-type: authorization_code
-    client-id: testclient
-    client-name: localhost
-    client-secret: testsecret
-    provider: localhost
+    client-id: pol-innsyn
+    client-name: azure
+    client-secret: dummy
+    provider: azure
     scope: openid
-    redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+    redirect-uri: test

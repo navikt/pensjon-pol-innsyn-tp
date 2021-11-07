@@ -8,7 +8,7 @@ val jacksonVersion = "2.13.0"
 plugins {
     kotlin("jvm") version "1.6.0-RC"
     kotlin("plugin.spring") version "1.6.0-RC"
-    id("org.springframework.boot") version "2.5.5"
+    id("org.springframework.boot") version "2.5.6"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
 }
 
@@ -33,7 +33,6 @@ dependencies {
     testImplementation(kotlin("test-junit5"))
     testImplementation("com.github.tomakehurst", "wiremock-jre8", "2.31.0")
     testImplementation("com.ninja-squad", "springmockk", "3.0.1")
-    testImplementation("no.nav.security", "mock-oauth2-server", "0.4.0")
     testImplementation("org.springframework.boot", "spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
         exclude(module = "mockito-core")
