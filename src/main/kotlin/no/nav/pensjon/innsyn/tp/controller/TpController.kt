@@ -20,7 +20,7 @@ class TpController(private val worksheetProducer: TpSheetProducer, private val t
     @GetMapping
     fun getTpInnsyn(
         @PathVariable("fnr") fnr: String,
-        @RegisteredOAuth2AuthorizedClient authorizedClient: OAuth2AuthorizedClient,
+        @RegisteredOAuth2AuthorizedClient("azure") authorizedClient: OAuth2AuthorizedClient,
         response: HttpServletResponse
     ) {
         // TODO: Use on behalf of flow and replace token with token for TP

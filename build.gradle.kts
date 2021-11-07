@@ -8,7 +8,7 @@ val jacksonVersion = "2.13.0"
 plugins {
     kotlin("jvm") version "1.6.0-RC"
     kotlin("plugin.spring") version "1.6.0-RC"
-    id("org.springframework.boot") version "2.5.5"
+    id("org.springframework.boot") version "2.5.6"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
 }
 
