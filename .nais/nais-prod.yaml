@@ -13,6 +13,8 @@ spec:
   azure:
     application:
       enabled: true
+      replyURLs:
+        - https://pensjon-pol-innsyn-tp.intern.nav.no/
       claims:
         extra:
           - NAVident
