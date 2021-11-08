@@ -9,7 +9,7 @@ spec:
   image: {{ image }}
   port: 8080
   ingresses:
-    - https://pensjon-pol-innsyn-tp.nais.preprod.local
+    - https://pensjon-pol-innsyn-tp.dev.intern.nav.no
   azure:
     application:
       enabled: true
