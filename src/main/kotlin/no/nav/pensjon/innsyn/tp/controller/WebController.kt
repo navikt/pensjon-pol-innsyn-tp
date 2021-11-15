@@ -18,9 +18,9 @@ class WebController {
     fun index(
         model: Model,
         @RegisteredOAuth2AuthorizedClient authorizedClient: OAuth2AuthorizedClient,
-        @AuthenticationPrincipal principal: OAuth2User
+        @AuthenticationPrincipal principal: DefaultOidcUser
     ): String {
-        model.addAttribute("user", (principal as DefaultOidcUser).preferredUsername)
+        model.addAttribute("user", principal.getClaimAsString("NAVident"))
         return "index"
     }
 }
