@@ -13,7 +13,6 @@ spec:
   azure:
     application:
       enabled: true
-      tenant: nav.no
       replyURLs:
         - https://pensjon-pol-innsyn-tp.dev.intern.nav.no/login/oauth2/code/azure
       claims:
