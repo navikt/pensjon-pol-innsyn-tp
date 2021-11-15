@@ -3,6 +3,7 @@ package no.nav.pensjon.innsyn.tp.controller
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient
 import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser
 import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -19,7 +20,7 @@ class WebController {
         @RegisteredOAuth2AuthorizedClient authorizedClient: OAuth2AuthorizedClient,
         @AuthenticationPrincipal principal: OAuth2User
     ): String {
-        model.addAttribute("user", principal.name)
+        model.addAttribute("user", (principal as DefaultOidcUser).preferredUsername)
         return "index"
     }
 }
