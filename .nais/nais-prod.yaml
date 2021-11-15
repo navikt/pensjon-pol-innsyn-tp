@@ -14,7 +14,7 @@ spec:
     application:
       enabled: true
       replyURLs:
-        - https://pensjon-pol-innsyn-tp.intern.nav.no/
+        - https://pensjon-pol-innsyn-tp.intern.nav.no/login/oauth2/code/azure
       claims:
         extra:
           - NAVident
