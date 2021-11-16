@@ -23,12 +23,12 @@ spec:
       value: prod
   liveness:
     path: actuator/health/liveness
-    initialDelay: 30
+    initialDelay: 45
     periodSeconds: 1
     failureThreshold: 60
   readiness:
     path: actuator/health/readiness
-    initialDelay: 30
+    initialDelay: 45
     periodSeconds: 1
     failureThreshold: 60
   replicas:
