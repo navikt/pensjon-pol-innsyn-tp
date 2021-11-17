@@ -8,4 +8,3 @@ spring.security.oauth2.client:
     client-name: Azure
     client-secret: ${AZURE_APP_CLIENT_SECRET}
     provider: azure
-    scope: openid

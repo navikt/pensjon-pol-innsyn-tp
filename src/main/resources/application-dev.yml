@@ -1,3 +1,4 @@
 spring.security.oauth2.client:
   provider.azure.issuer-uri: ${AZURE_OPENID_CONFIG_ISSUER}
+  registration.azure.scope: openid, api://dev-fss.pensjonsamhandling.tp-q1/.default
 tp.url: https://tp-api-q1.dev-fss-pub.nais.io
