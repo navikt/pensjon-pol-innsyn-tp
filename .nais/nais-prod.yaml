@@ -10,6 +10,10 @@ spec:
   port: 8080
   ingresses:
     - https://pensjon-pol-innsyn-tp.intern.nav.no
+  accessPolicy:
+    outbound:
+      rules:
+        - application: tp
   azure:
     application:
       enabled: true
