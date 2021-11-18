@@ -14,6 +14,7 @@ spec:
     outbound:
       rules:
         - application: tp-q1
+          cluster: dev-fss
   azure:
     application:
       enabled: true
