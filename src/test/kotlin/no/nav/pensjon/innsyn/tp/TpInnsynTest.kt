@@ -62,10 +62,10 @@ internal class TpInnsynTest {
     @Test
     fun `Handles missing data`() {
         stubFor(
-            get("/api/pol/0")
+            get("/api/pol/00000000000")
                 .willReturn(okForJson(emptyList<Forhold>()))
         )
-        mockMvc.get("/api/innsyn/0") {
+        mockMvc.get("/api/innsyn/00000000000") {
             with(oauth2Login())
         }.andExpect {
             status {
@@ -77,10 +77,10 @@ internal class TpInnsynTest {
     @Test
     fun `Handles error response`() {
         stubFor(
-            get("/api/pol/1")
+            get("/api/pol/11111111111")
                 .willReturn(serviceUnavailable())
         )
-        mockMvc.get("/api/innsyn/1") {
+        mockMvc.get("/api/innsyn/11111111111") {
             with(oauth2Login())
         }.andExpect {
             status {

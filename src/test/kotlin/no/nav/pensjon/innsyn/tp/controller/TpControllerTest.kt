@@ -53,9 +53,9 @@ internal class TpControllerTest {
 
     @Test
     fun `Returns 200 and valid worksheet`() {
-        every { tpService.getData(eq("0"), any()) } returns forhold
+        every { tpService.getData(eq("00000000000"), any()) } returns forhold
         every { tpSheetProducer.produceWorksheet(forhold) } returns XSSFWorkbook(FileInputStream(File("tp-test-worksheet.xlsx")))
-        mockMvc.get("/api/innsyn/0") {
+        mockMvc.get("/api/innsyn/00000000000") {
             with(oauth2Login())
         }.andExpect {
             status { isOk() }

@@ -41,7 +41,7 @@ services:
       SPRING_DATA_MONGODB_HOST: mongodb
 
   tjenestepensjon:
-    image: ghcr.io/navikt/tp/tp-nais:2021.11.02-df864f5
+    image: ghcr.io/navikt/tp/tp-nais:2022.02.16-0ab9a27
     entrypoint:
       - "/run-java.sh"
     depends_on:

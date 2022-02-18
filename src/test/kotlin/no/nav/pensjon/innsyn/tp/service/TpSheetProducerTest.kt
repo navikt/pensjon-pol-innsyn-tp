@@ -7,17 +7,15 @@ import no.nav.pensjon.innsyn.tp.domain.container.YtelseContainer
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.ActiveProfiles
 
 @SpringBootTest(classes = [TpSheetProducer::class, ForholdContainer::class, YtelseContainer::class])
-@ActiveProfiles("TP")
 internal class TpSheetProducerTest {
 
     @Autowired
     private lateinit var tpSheetProducer: TpSheetProducer
 
     @Test
-    fun `Produces TP poppSheet`() {
+    fun `Produces TP sheet`() {
         tpSheetProducer.produceWorksheet(forhold).assertEqualsTestData()
     }
 }
