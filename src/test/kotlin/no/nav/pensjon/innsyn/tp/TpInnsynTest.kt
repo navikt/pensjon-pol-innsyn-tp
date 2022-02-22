@@ -75,6 +75,21 @@ internal class TpInnsynTest {
     }
 
     @Test
+    fun `Handles not found response`() {
+        stubFor(
+            get("/api/pol/11111111111")
+                .willReturn(notFound())
+        )
+        mockMvc.get("/api/innsyn/11111111111") {
+            with(oauth2Login())
+        }.andExpect {
+            status {
+                isOk()
+            }
+        }
+    }
+
+    @Test
     fun `Handles error response`() {
         stubFor(
             get("/api/pol/11111111111")

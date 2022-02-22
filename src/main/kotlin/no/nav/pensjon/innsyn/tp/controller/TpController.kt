@@ -26,8 +26,11 @@ class TpController(private val worksheetProducer: TpSheetProducer, private val t
         response: HttpServletResponse
     ) {
         log.info("Fetching data for ${fnr.substring(0, 5) + "*****"}")
-        val forhold = tpService.getData(fnr, authorizedClient.accessToken.tokenValue)
-        log.info("Successfully fetched data.")
+        val forhold = try {
+            tpService.getData(fnr, authorizedClient.accessToken.tokenValue)
+        } catch (_: NoSuchElementException) {
+            emptyList()
+        }
         response.apply {
             addHeader("Content-Description", "File Transfer")
             addHeader(CONTENT_DISPOSITION, "attachment; filename=$fnr.xlsx")

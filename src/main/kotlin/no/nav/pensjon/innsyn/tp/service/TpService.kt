@@ -21,6 +21,10 @@ class TpService(@Value("\${tp.url}") tpURL: String) {
             it.setBearerAuth(auth)
         }
         .retrieve()
+        .onStatus({ it.value() == 404 }) {
+            log.warn("Person not found, returning empty data.")
+            Mono.error(NoSuchElementException())
+        }
         .onStatus({ !it.is2xxSuccessful }) {
             "Error fetching data from TP. Status code: ${it.statusCode()}".let { err ->
                 log.error(err)
@@ -28,5 +32,7 @@ class TpService(@Value("\${tp.url}") tpURL: String) {
             }
         }
         .bodyToFlux<Forhold>()
-        .collectList().block()!!
+        .collectList().block()!!.also {
+            log.info("Successfully fetched data.")
+        }
 }
