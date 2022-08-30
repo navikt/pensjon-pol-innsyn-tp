@@ -24,7 +24,7 @@ class TpService(@Value("\${tp.url}") tpURL: String) {
         .retrieve()
         .onStatus({ it.value() == 404 }) {
             it.bodyToMono<String>().flatMap { body ->
-                    if(body?.contains("Could not resolve host") == true) {
+                    if(body?.contains("resolve") == true) {
                     "Error fetching data from TP. Status code: ${it.statusCode()}".let { err ->
                         log.error(err)
                         Mono.error(ResponseStatusException(HttpStatus.BAD_GATEWAY, err))
