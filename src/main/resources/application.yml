@@ -3,6 +3,8 @@ management:
   endpoints.web.exposure.include: prometheus, health
 spring.security.oauth2.client:
   registration.azure:
+    scope:
+      - "TP_INNSYN"
     authorization-grant-type: authorization_code
     client-id: ${AZURE_APP_CLIENT_ID}
     client-name: Azure
