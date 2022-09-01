@@ -22,6 +22,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module", "jackson-module-kotlin", jacksonVersion)
     implementation("io.micrometer", "micrometer-registry-prometheus", "1.8.3")
     implementation("net.logstash.logback", "logstash-logback-encoder", "7.0.1")
+    implementation("no.nav.common", "token-client", "2.2022.08.31_10.30-f0905803be03")
     implementation("org.apache.poi", "poi-ooxml", "5.2.0")
     implementation("org.springframework.boot", "spring-boot-starter-web")
     implementation("org.springframework.boot", "spring-boot-starter-webflux")

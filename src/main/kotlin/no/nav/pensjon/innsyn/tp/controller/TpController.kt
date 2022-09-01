@@ -1,6 +1,7 @@
 package no.nav.pensjon.innsyn.tp.controller
 
 import no.nav.pensjon.innsyn.tp.CONTENT_TYPE_EXCEL
+import no.nav.pensjon.innsyn.tp.service.AzureTokenService
 import no.nav.pensjon.innsyn.tp.service.TpService
 import no.nav.pensjon.innsyn.tp.service.TpSheetProducer
 import org.apache.poi.xssf.streaming.SXSSFWorkbook
@@ -16,7 +17,11 @@ import javax.servlet.http.HttpServletResponse
 
 @RestController
 @RequestMapping("/api/innsyn/{fnr:\\d{11}}")
-class TpController(private val worksheetProducer: TpSheetProducer, private val tpService: TpService) {
+class TpController(
+    private val worksheetProducer: TpSheetProducer,
+    private val tpService: TpService,
+    private val azureTokenService: AzureTokenService
+) {
     val log = getLogger(javaClass)
 
     @GetMapping
@@ -27,7 +32,7 @@ class TpController(private val worksheetProducer: TpSheetProducer, private val t
     ) {
         log.info("Fetching data for ${fnr.substring(0, 5) + "*****"}")
         val forhold = try {
-            tpService.getData(fnr, authorizedClient.accessToken.tokenValue)
+            tpService.getData(fnr, azureTokenService.getOnBehalOfToken(authorizedClient))
         } catch (_: NoSuchElementException) {
             emptyList()
         }

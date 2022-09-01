@@ -13,6 +13,8 @@ spring.security.oauth2.client:
     provider: azure
     scope: openid
     redirect-uri: http://localhost:8082//login/oauth2/code/azure
-tp.url: http://localhost:8080
+tp:
+  url: http://localhost:8080
+  scope: bogus
 server:
   port: 8082
