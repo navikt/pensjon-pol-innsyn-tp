@@ -1,4 +1,4 @@
 tp:
   url: https://tp-api.prod-fss-pub.nais.io
-  scope: api://prod-fss.pensjonsamhandling.tp/.default
+  scope: api://prod-fss.pensjonsamhandling.tp/tp_innsyn
 scope: api://prod-gcp.pensjonsamhandling.pensjon-pol-innsyn-tp/.default
