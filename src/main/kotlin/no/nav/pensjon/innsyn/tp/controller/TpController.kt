@@ -7,8 +7,8 @@ import no.nav.pensjon.innsyn.tp.service.TpSheetProducer
 import org.apache.poi.xssf.streaming.SXSSFWorkbook
 import org.slf4j.LoggerFactory.getLogger
 import org.springframework.http.HttpHeaders.CONTENT_DISPOSITION
-import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.security.oauth2.core.oidc.user.OidcUser
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient
+import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -27,12 +27,12 @@ class TpController(
     @GetMapping
     fun getTpInnsyn(
         @PathVariable("fnr") fnr: String,
-        @AuthenticationPrincipal user: OidcUser,
+        @RegisteredOAuth2AuthorizedClient("azure") authorizedClient: OAuth2AuthorizedClient,
         response: HttpServletResponse
     ) {
         log.info("Fetching data for ${fnr.substring(0, 5) + "*****"}")
         val forhold = try {
-            tpService.getData(fnr, azureTokenService.getOnBehalOfToken(user))
+            tpService.getData(fnr, azureTokenService.getOnBehalOfToken(authorizedClient))
         } catch (_: NoSuchElementException) {
             emptyList()
         }

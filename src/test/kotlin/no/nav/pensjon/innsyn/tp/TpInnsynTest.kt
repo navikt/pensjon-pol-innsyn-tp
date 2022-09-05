@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oauth2Login
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
 import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.test.web.servlet.MockMvc
@@ -57,7 +57,7 @@ internal class TpInnsynTest {
                 .willReturn(okForJson(forhold))
         )
         mockMvc.get("/api/innsyn/$person") {
-            with(oidcLogin())
+            with(oauth2Login())
         }.andExpect {
             status { isOk() }
             content { contentType(CONTENT_TYPE_EXCEL) }
@@ -74,7 +74,7 @@ internal class TpInnsynTest {
                 .willReturn(okForJson(emptyList<Forhold>()))
         )
         mockMvc.get("/api/innsyn/00000000000") {
-            with(oidcLogin())
+            with(oauth2Login())
         }.andExpect {
             status {
                 isOk()
@@ -90,7 +90,7 @@ internal class TpInnsynTest {
                 .willReturn(notFound())
         )
         mockMvc.get("/api/innsyn/11111111111") {
-            with(oidcLogin())
+            with(oauth2Login())
         }.andExpect {
             status {
                 isOk()
@@ -106,7 +106,7 @@ internal class TpInnsynTest {
                 .willReturn(serviceUnavailable())
         )
         mockMvc.get("/api/innsyn/11111111111") {
-            with(oidcLogin())
+            with(oauth2Login())
         }.andExpect {
             status {
                 isBadGateway()
