@@ -110,7 +110,6 @@ internal class TpInnsynTest {
         }.andExpect {
             status {
                 isBadGateway()
-                reason("Error fetching data from TP. Status code: 503 SERVICE_UNAVAILABLE")
             }
         }
     }
