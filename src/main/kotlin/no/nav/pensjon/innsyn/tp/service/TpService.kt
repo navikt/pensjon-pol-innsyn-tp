@@ -5,17 +5,17 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
-import org.springframework.web.reactive.function.client.*
+import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.reactive.function.client.bodyToFlux
 import org.springframework.web.server.ResponseStatusException
 import reactor.core.publisher.Flux
-import reactor.core.publisher.Mono
 
 @Service
 class TpService(@Value("\${tp.url}") tpURL: String) {
     private val log = LoggerFactory.getLogger(javaClass)
     private val webClient = WebClient.builder().baseUrl(tpURL).build()
 
-    fun getData(fnr: String, auth: String): List<Forhold> = webClient.get()
+    fun getData(fnr: String, auth: String): Iterable<Forhold> = webClient.get()
         .uri("/api/pol/$fnr")
         .headers {
             it.setBearerAuth(auth)
@@ -25,21 +25,17 @@ class TpService(@Value("\${tp.url}") tpURL: String) {
                 200 -> it.bodyToFlux<Forhold>()
                 404 -> {
                     log.warn("Person not found, returning empty data.")
-                    Flux.error(NoSuchElementException())
+                    Flux.empty()
                 }
                 else -> it.bodyToFlux<String>().defaultIfEmpty("<NULL>").flatMap { body ->
                     Flux.error(badGateway("Status code ${it.statusCode()} with message: $body}"))
                 }
             }
-        }
-        .onErrorMap {
-            if (it !is NoSuchElementException && it !is ResponseStatusException) {
-                badGateway(it.message)
-            } else it
+        }.onErrorMap {
+            if (it !is ResponseStatusException) badGateway(it.message) else it
         }.doOnComplete {
             log.info("Successfully fetched data.")
-        }
-        .collectList().block()!!
+        }.toIterable()
 
     fun badGateway(logMessage: String?): ResponseStatusException {
         log.error("Error fetching data from TP: $logMessage")

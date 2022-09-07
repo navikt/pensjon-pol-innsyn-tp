@@ -7,5 +7,5 @@ import no.nav.pensjon.innsyn.tp.domain.Forhold
 abstract class TpContainer<T : Domain>(
     entityName: String,
     propertyNames: Array<String>,
-    mapper: (List<Forhold>) -> List<T>
+    mapper: (Iterable<Forhold>) -> Iterable<T>
 ) : DomainContainer<Forhold, T>(entityName, propertyNames, mapper)

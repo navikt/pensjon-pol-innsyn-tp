@@ -6,7 +6,7 @@ import no.nav.pensjon.innsyn.tp.service.DomainRowFiller
 abstract class DomainContainer<X : Any, T : Domain>(
     val entityName: String,
     val propertyNames: Array<String>,
-    val map: (List<X>) -> List<T>
+    val map: (Iterable<X>) -> Iterable<T>
 ) {
     val rowFiller: (CellValueSetter, T) -> Unit = DomainRowFiller<T>()::setCellValues
 }

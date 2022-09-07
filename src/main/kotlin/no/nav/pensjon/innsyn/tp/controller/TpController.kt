@@ -31,11 +31,7 @@ class TpController(
         response: HttpServletResponse
     ) {
         log.info("Fetching data for ${fnr.substring(0, 5) + "*****"}")
-        val forhold = try {
-            tpService.getData(fnr, azureTokenService.getOnBehalOfToken(authorizedClient))
-        } catch (_: NoSuchElementException) {
-            emptyList()
-        }
+        val forhold = tpService.getData(fnr, azureTokenService.getOnBehalOfToken(authorizedClient))
         response.apply {
             addHeader("Content-Description", "File Transfer")
             addHeader(CONTENT_DISPOSITION, "attachment; filename=$fnr.xlsx")

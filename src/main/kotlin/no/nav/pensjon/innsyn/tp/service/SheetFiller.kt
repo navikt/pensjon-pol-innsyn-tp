@@ -12,14 +12,14 @@ class SheetFiller<X : Domain, T : Domain> internal constructor(
     private val container: DomainContainer<X, T>
 ) {
 
-    fun populateSheet(domain: List<X>, workbook: Workbook) {
+    fun populateSheet(domain: Iterable<X>, workbook: Workbook) {
         val sheet = workbook.createSheet(container.entityName)
         createHeaderRow(sheet, createHeaderCellStyle(workbook))
         createRows(domain, sheet, createDateCellStyle(workbook))
         fitColumnsToContentSize(sheet)
     }
 
-    private fun createRows(domain: List<X>, sheet: Sheet, dateCellStyle: CellStyle) {
+    private fun createRows(domain: Iterable<X>, sheet: Sheet, dateCellStyle: CellStyle) {
         container.map(domain).forEachIndexed { i, o ->
             container.rowFiller(RowFiller(sheet, dateCellStyle, i + 1), o)
         }

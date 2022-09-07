@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 class TpSheetProducer(
     private val containers: List<TpContainer<*>>
 ) {
-    fun produceWorksheet(forhold: List<Forhold>) = XSSFWorkbook().apply {
+    fun produceWorksheet(forhold: Iterable<Forhold>) = XSSFWorkbook().apply {
         containers.map { SheetFiller(it) }.forEach { filler ->
             filler.populateSheet(forhold, this)
         }
