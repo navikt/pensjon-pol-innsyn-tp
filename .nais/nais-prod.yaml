@@ -23,7 +23,8 @@ spec:
         - https://pensjon-pol-innsyn-tp.intern.nav.no/login/oauth2/code/azure
       claims:
         groups:
-          - id: "457e28b8-7bc1-4c84-b5c8-404025dd096a"
+          - id: "457e28b8-7bc1-4c84-b5c8-404025dd096a" #Pensjon-samhandling
+          - id: "5607faef-5fd9-4cbe-8842-a9d79cd78cbc" #NAV Kontaktsenter Oslo og Vest-Viken
         extra:
           - NAVident
   env:
