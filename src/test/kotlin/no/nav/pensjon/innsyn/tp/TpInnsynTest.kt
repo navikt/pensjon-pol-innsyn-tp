@@ -5,8 +5,10 @@ import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder.okForJso
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.common.Json
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
+import com.github.tomakehurst.wiremock.matching.EqualToPattern
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
+import no.nav.pensjon.innsyn.tp.controller.FNR
 import no.nav.pensjon.innsyn.tp.domain.Forhold
 import no.nav.pensjon.innsyn.tp.domain.TpObjects.forhold
 import no.nav.pensjon.innsyn.tp.domain.TpObjects.person
@@ -53,10 +55,12 @@ internal class TpInnsynTest {
     fun `Generates TP worksheet`() {
         every { azureTokenService.getOnBehalOfToken(any()) } returns "bogus"
         stubFor(
-            get("/api/pol/$person")
+            get("/api/pol").withHeader(FNR, EqualToPattern(person))
                 .willReturn(okForJson(forhold))
         )
-        mockMvc.get("/api/innsyn/$person") {
+        mockMvc.get("/api/innsyn") {
+            header(FNR, person
+            )
             with(oauth2Login())
         }.andExpect {
             status { isOk() }
@@ -70,10 +74,11 @@ internal class TpInnsynTest {
     fun `Handles missing data`() {
         every { azureTokenService.getOnBehalOfToken(any()) } returns "bogus"
         stubFor(
-            get("/api/pol/00000000000")
+            get("/api/pol").withHeader(FNR, EqualToPattern("00000000000"))
                 .willReturn(okForJson(emptyList<Forhold>()))
         )
-        mockMvc.get("/api/innsyn/00000000000") {
+        mockMvc.get("/api/innsyn") {
+            header(FNR, "00000000000")
             with(oauth2Login())
         }.andExpect {
             status {
@@ -86,10 +91,11 @@ internal class TpInnsynTest {
     fun `Handles not found response`() {
         every { azureTokenService.getOnBehalOfToken(any()) } returns "bogus"
         stubFor(
-            get("/api/pol/11111111111")
+            get("/api/pol").withHeader(FNR, EqualToPattern("11111111111"))
                 .willReturn(notFound())
         )
-        mockMvc.get("/api/innsyn/11111111111") {
+        mockMvc.get("/api/innsyn") {
+            header(FNR, "11111111111")
             with(oauth2Login())
         }.andExpect {
             status {
@@ -102,10 +108,11 @@ internal class TpInnsynTest {
     fun `Handles error response`() {
         every { azureTokenService.getOnBehalOfToken(any()) } returns "bogus"
         stubFor(
-            get("/api/pol/11111111111")
+            get("/api/pol").withHeader(FNR, EqualToPattern("11111111111"))
                 .willReturn(serviceUnavailable())
         )
-        mockMvc.get("/api/innsyn/11111111111") {
+        mockMvc.get("/api/innsyn") {
+            header(FNR, "11111111111")
             with(oauth2Login())
         }.andExpect {
             status {
@@ -116,9 +123,10 @@ internal class TpInnsynTest {
 
     @Test
     fun `Redirects unauthorized to login`() {
-        mockMvc.get("/api/innsyn/$person")
-            .andExpect {
-                status { is3xxRedirection() }
-            }
+        mockMvc.get("/api/innsyn") {
+            header(FNR, person)
+        }.andExpect {
+            status { is3xxRedirection() }
+        }
     }
 }

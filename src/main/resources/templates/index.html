@@ -20,6 +20,7 @@
 <br>
 <br>
 <div style="display: table; margin: 0 auto">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js" type="text/javascript"></script>
     <form method="get" action="javascript:download(fnr.value)">
         <label><b>Innsyn:</b>
             <br>
@@ -33,11 +34,22 @@
     <a id="dlink">
         <script>
             function download(fnr) {
-                let link = document.getElementById('dlink');
-                link.href = 'api/innsyn/' + fnr
-                link.download = fnr + '.xlsx'
-                link.innerText = fnr + '.xlsx'
-                link.dispatchEvent(new MouseEvent('click'));
+                $.ajax({
+                    url: 'api/innsyn/',
+                    type: 'GET',
+                    dataType: 'binary',
+                    headers: {"fnr": fnr},
+                    processData: false,
+                    success: function(blob) {
+                        let windowUrl = window.URL || window.webkitURL;
+                        let url = windowUrl.createObjectURL(blob);
+                        let anchor = document.getElementById('dlink');
+                        anchor.prop('href', url);
+                        anchor.prop('download', fnr + '.xlsx');
+                        anchor.get(0).click();
+                        windowUrl.revokeObjectURL(url);
+                    }
+                });
             }
         </script>
     </a>
