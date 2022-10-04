@@ -13,13 +13,13 @@ import org.springframework.http.HttpHeaders.CONTENT_DISPOSITION
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient
 import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpServletResponse
 
 @RestController
-@RequestMapping("/api/innsyn/{fnr:\\d{11}}")
+@RequestMapping("/api/innsyn")
 class TpController(
     private val worksheetProducer: TpSheetProducer,
     private val tpService: TpService,
@@ -29,7 +29,7 @@ class TpController(
 
     @GetMapping
     fun getTpInnsyn(
-        @PathVariable("fnr") fnr: String,
+        @RequestHeader(FNR) fnr: String,
         @RegisteredOAuth2AuthorizedClient("azure") authorizedClient: OAuth2AuthorizedClient,
         response: HttpServletResponse
     ) {

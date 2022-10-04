@@ -1,5 +1,6 @@
 package no.nav.pensjon.innsyn.tp.service
 
+import no.nav.pensjon.innsyn.tp.controller.FNR
 import no.nav.pensjon.innsyn.tp.domain.Forhold
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
@@ -16,8 +17,9 @@ class TpService(@Value("\${tp.url}") tpURL: String) {
     private val webClient = WebClient.builder().baseUrl(tpURL).build()
 
     fun getData(fnr: String, auth: String): Iterable<Forhold> = webClient.get()
-        .uri("/api/pol/$fnr")
+        .uri("/api/pol")
         .headers {
+            it.set(FNR, fnr)
             it.setBearerAuth(auth)
         }
         .exchangeToFlux {

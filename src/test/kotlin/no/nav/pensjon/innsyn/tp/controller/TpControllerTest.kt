@@ -60,8 +60,9 @@ internal class TpControllerTest {
         every { tpService.getData(eq("00000000000"), any()) } returns forhold
         every { tpSheetProducer.produceWorksheet(forhold) } returns XSSFWorkbook(FileInputStream(File("tp-test-worksheet.xlsx")))
         every { azureTokenService.getOnBehalOfToken(any()) } returns "bogus"
-        mockMvc.get("/api/innsyn/00000000000") {
+        mockMvc.get("/api/innsyn") {
             with(oauth2Login())
+            header(FNR, "00000000000")
         }.andExpect {
             status { isOk() }
             content { contentType(CONTENT_TYPE_EXCEL) }
