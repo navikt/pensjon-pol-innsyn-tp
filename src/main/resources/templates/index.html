@@ -33,15 +33,24 @@
         function download(fnr) {
             let xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
-                if(xhttp.readyState === 4 && xhttp.status === 200) {
-                    let anchor = document.createElement("a")
-                    anchor.download = fnr + '.xlsx';
-                    anchor.href = window.URL.createObjectURL(xhttp.response);
+                if (xhttp.readyState === 4) {
+                    if (xhttp.status === 200) {
+                        let anchor = document.createElement("a")
+                        anchor.download = fnr + '.xlsx';
+                        anchor.href = window.URL.createObjectURL(xhttp.response);
 
-                    document.body.appendChild(anchor);
-                    anchor.click();
-                    document.body.removeChild(anchor);
+                        document.body.appendChild(anchor);
+                        anchor.click();
+                        document.body.removeChild(anchor);
+                    } else {
+                        console.log(xhttp.statusText);
+                        alert(xhttp.statusText);
+                    }
                 }
+            }
+            xhttp.onerror = function (error) {
+                console.log(error.type);
+                alert(error.type);
             }
             xhttp.open("GET", "api/innsyn/")
             xhttp.setRequestHeader("fnr", fnr)
