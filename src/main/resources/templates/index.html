@@ -20,7 +20,6 @@
 <br>
 <br>
 <div style="display: table; margin: 0 auto">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js" type="text/javascript"></script>
     <form method="get" action="javascript:download(fnr.value)">
         <label><b>Innsyn:</b>
             <br>
@@ -30,29 +29,26 @@
             <input type="submit" value="Download">
         </label>
     </form>
-    <br>
-    <a id="dlink">
-        <script>
-            function download(fnr) {
-                $.ajax({
-                    url: 'api/innsyn/',
-                    type: 'GET',
-                    dataType: 'binary',
-                    headers: {"fnr": fnr},
-                    processData: false,
-                    success: function(blob) {
-                        let windowUrl = window.URL || window.webkitURL;
-                        let url = windowUrl.createObjectURL(blob);
-                        let anchor = document.getElementById('dlink');
-                        anchor.prop('href', url);
-                        anchor.prop('download', fnr + '.xlsx');
-                        anchor.get(0).click();
-                        windowUrl.revokeObjectURL(url);
-                    }
-                });
+    <script>
+        function download(fnr) {
+            let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if(xhttp.readyState === 4 && xhttp.status === 200) {
+                    let anchor = document.createElement("a")
+                    anchor.download = fnr + '.xlsx';
+                    anchor.href = window.URL.createObjectURL(xhttp.response);
+
+                    document.body.appendChild(anchor);
+                    anchor.click();
+                    document.body.removeChild(anchor);
+                }
             }
-        </script>
-    </a>
+            xhttp.open("GET", "api/innsyn/")
+            xhttp.setRequestHeader("fnr", fnr)
+            xhttp.responseType = "blob"
+            xhttp.send();
+        }
+    </script>
 </div>
 </body>
 </html>
