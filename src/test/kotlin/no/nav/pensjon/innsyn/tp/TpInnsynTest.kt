@@ -99,7 +99,7 @@ internal class TpInnsynTest {
             with(oauth2Login())
         }.andExpect {
             status {
-                isOk()
+                isBadGateway()
             }
         }
     }
