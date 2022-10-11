@@ -25,10 +25,6 @@ class TpService(@Value("\${tp.url}") tpURL: String) {
         .exchangeToFlux {
             when (it.statusCode().value()) {
                 200 -> it.bodyToFlux<Forhold>()
-                404 -> {
-                    log.warn("Person not found, returning empty data.")
-                    Flux.empty()
-                }
                 else -> it.bodyToFlux<String>().defaultIfEmpty("<NULL>").flatMap { body ->
                     Flux.error(badGateway("Status code ${it.statusCode()} with message: $body}"))
                 }
