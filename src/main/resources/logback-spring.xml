@@ -13,6 +13,29 @@
             </jsonGeneratorDecorator>
         </encoder>
     </appender>
+    <appender name="SECURE_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+            <evaluator>
+                <matcher>
+                    <Name>FNR</Name>
+                    <regex>*.\b(\d{6})\d{5}\b*.</regex>
+                </matcher>
+                <expression>FNR.matches(formattedMessage)</expression>
+            </evaluator>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <file>/secure-logs/secure.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>/secure-logs/secure.log.%i</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>1</maxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>50MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+    </appender>
 
     <springProfile name="prod | dev">
         <logger name="no.nav" level="INFO"/>
@@ -23,6 +46,7 @@
 
     <root level="INFO">
         <appender-ref ref="JSON_CONSOLE"/>
+        <appender-ref ref="SECURE_LOG"/>
     </root>
 
 </configuration>
