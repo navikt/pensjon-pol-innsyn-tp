@@ -9,7 +9,7 @@ on:
 
 jobs:
   deployToProd:
-    name: "Deploy tp-api to Prod"
+    name: Deploy to Prod
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
