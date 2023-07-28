@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 group = "no.nav.pensjon"
 version = "1"
 
-val jacksonVersion = "2.13.4"
+val jacksonVersion = "2.15.2"
 
 plugins {
     kotlin("jvm") version "1.9.0"
@@ -31,7 +31,7 @@ dependencies {
     implementation("org.springframework.boot", "spring-boot-starter-oauth2-client")
     implementation("org.springframework.boot", "spring-boot-starter-thymeleaf")
     testImplementation(kotlin("test-junit5"))
-    testImplementation("com.github.tomakehurst", "wiremock-jre8", "2.33.2")
+    testImplementation("com.github.tomakehurst", "wiremock", "3.0.0-beta-10")
     testImplementation("com.ninja-squad", "springmockk", "3.1.1")
     testImplementation("org.springframework.boot", "spring-boot-starter-test") {
         exclude(module = "mockito-core")
