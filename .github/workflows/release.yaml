@@ -27,7 +27,7 @@ jobs:
       - name: Create tag
         run: echo "TAG=$(date "+%Y.%m.%d")-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
       - name: Build and push docker image
-        uses: docker/build-push-action@v1.1.0
+        uses: docker/build-push-action@v5.0.0
         with:
           username: token
           password: ${{ secrets.GITHUB_TOKEN }}
