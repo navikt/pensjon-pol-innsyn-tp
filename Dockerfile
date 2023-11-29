@@ -1,4 +1,4 @@
-FROM navikt/java:20
+FROM ghcr.io/navikt/baseimages/temurin:21
 
 USER root
 RUN apt-get update && apt-get install -y \
