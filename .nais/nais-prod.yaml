@@ -14,10 +14,8 @@ spec:
     - https://pensjon-pol-innsyn-tp.intern.nav.no
   accessPolicy:
     outbound:
-      rules:
-        - application: tp
-          namespace: pensjonsamhandling
-          cluster: prod-fss
+      external:
+        - host: tp-api.prod-fss-pub.nais.io
   azure:
     application:
       enabled: true
