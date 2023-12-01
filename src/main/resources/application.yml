@@ -2,14 +2,16 @@ management:
   endpoint.prometheus.enabled: true
   endpoints.web.exposure.include: prometheus, health
 spring.security.oauth2.client:
-  provider.azure:
-    token-uri: ${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT}
-    issuer-uri: ${AZURE_OPENID_CONFIG_ISSUER}
-    jwk-set-uri: ${AZURE_OPENID_CONFIG_JWKS_URI}
-  registration.azure:
-    authorization-grant-type: authorization_code
-    client-id: ${AZURE_APP_CLIENT_ID}
-    client-secret: ${AZURE_APP_CLIENT_SECRET}
-    scope:
-      - openid
-      - ${scope}
+  provider:
+    azure:
+      token-uri: ${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT}
+      issuer-uri: ${AZURE_OPENID_CONFIG_ISSUER}
+      jwk-set-uri: ${AZURE_OPENID_CONFIG_JWKS_URI}
+  registration:
+    azure:
+      authorization-grant-type: authorization_code
+      client-id: ${AZURE_APP_CLIENT_ID}
+      client-secret: ${AZURE_APP_CLIENT_SECRET}
+      scope:
+        - openid
+        - ${scope}
