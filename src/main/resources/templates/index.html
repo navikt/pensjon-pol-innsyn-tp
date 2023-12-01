@@ -42,15 +42,18 @@
                         document.body.appendChild(anchor);
                         anchor.click();
                         document.body.removeChild(anchor);
+                    } else if (xhttp.status === 502) {
+                        console.log("Bad Gateway: Received error response from TP.");
+                        alert("Bad Gateway: Received error response from TP.");
                     } else {
-                        console.log(xhttp.statusText);
-                        alert(xhttp.statusText);
+                        console.log("Unexpected error from backend, status: " + xhttp.status)
+                        alert("Unexpected error from backend, status: " + xhttp.status)
                     }
                 }
             }
             xhttp.onerror = function (error) {
-                console.log(error.type);
-                alert(error.type);
+                console.log("Unexpected error: " + error.type);
+                alert("Unexpected error: " + error.type);
             }
             xhttp.open("GET", "api/innsyn/")
             xhttp.setRequestHeader("fnr", fnr)
