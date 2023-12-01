@@ -1,7 +1,6 @@
 package no.nav.pensjon.innsyn.tp.controller
 
 import io.netty.handler.codec.http.HttpHeaderValues.KEEP_ALIVE
-import jakarta.servlet.http.HttpServletResponse
 import no.nav.pensjon.innsyn.tp.CONTENT_TYPE_EXCEL
 import no.nav.pensjon.innsyn.tp.service.AzureTokenService
 import no.nav.pensjon.innsyn.tp.service.TpService
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.servlet.http.HttpServletResponse
 
 @RestController
 @RequestMapping("/api/innsyn")

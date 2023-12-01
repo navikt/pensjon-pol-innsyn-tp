@@ -21,7 +21,7 @@ dependencies {
     implementation("com.fasterxml.jackson.datatype", "jackson-datatype-jsr310", jacksonVersion)
     implementation("com.fasterxml.jackson.module", "jackson-module-kotlin", jacksonVersion)
     implementation("io.micrometer", "micrometer-registry-prometheus", "1.12.0")
-    implementation("net.logstash.logback", "logstash-logback-encoder", "7.4")
+    implementation("net.logstash.logback", "logstash-logback-encoder", "7.2")
     implementation("no.nav.common", "token-client", "2.2022.09.02_11.04-2530dd139a0a")
     implementation("org.apache.poi", "poi-ooxml", "5.2.5")
     implementation("org.springframework.boot", "spring-boot-starter-web")
@@ -32,7 +32,7 @@ dependencies {
     implementation("org.springframework.boot", "spring-boot-starter-thymeleaf")
     testImplementation(kotlin("test-junit5"))
     testRuntimeOnly("org.junit.platform", "junit-platform-launcher")
-    testImplementation("com.github.tomakehurst", "wiremock", "3.0.1")
+    testImplementation("com.github.tomakehurst", "wiremock-jre8", "2.33.2")
     testImplementation("com.ninja-squad", "springmockk", "4.0.2")
     testImplementation("org.springframework.boot", "spring-boot-starter-test") {
         exclude(module = "mockito-core")
@@ -42,7 +42,7 @@ dependencies {
 
 tasks {
     withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "20"
+        kotlinOptions.jvmTarget = "18"
     }
     test {
         useJUnitPlatform()

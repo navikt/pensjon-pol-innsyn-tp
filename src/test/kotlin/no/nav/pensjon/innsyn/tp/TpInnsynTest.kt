@@ -1,7 +1,9 @@
 package no.nav.pensjon.innsyn.tp
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder.okForJson
 import com.github.tomakehurst.wiremock.client.WireMock.*
+import com.github.tomakehurst.wiremock.common.Json
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import com.github.tomakehurst.wiremock.matching.EqualToPattern
 import com.ninjasquad.springmockk.MockkBean
@@ -42,6 +44,7 @@ internal class TpInnsynTest {
 
     @BeforeAll
     fun setup() {
+        Json.getObjectMapper().registerModule(JavaTimeModule())
         mockMvc = MockMvcBuilders
             .webAppContextSetup(context)
             .apply<DefaultMockMvcBuilder>(springSecurity())
