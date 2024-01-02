@@ -24,7 +24,8 @@ spec:
       claims:
         groups:
           - id: "457e28b8-7bc1-4c84-b5c8-404025dd096a" #Pensjon-samhandling
-          - id: "5607faef-5fd9-4cbe-8842-a9d79cd78cbc" #NAV Kontaktsenter Oslo og Vest-Viken
+          - id: "5607faef-5fd9-4cbe-8842-a9d79cd78cbc" #NAV Kontaktsenter Oslo og Vest-Viken (Gammel?)
+          - id: "29d85700-0eb1-483e-b12a-743c38dc37c0" #NAV Kontaktsenter Oslo of Vest-Viken 4106
         extra:
           - NAVident
   env:
