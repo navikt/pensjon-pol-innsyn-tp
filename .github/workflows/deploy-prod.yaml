@@ -10,13 +10,15 @@ on:
 jobs:
   deployToProd:
     name: Deploy to Prod
+    permissions:
+      contents: "read"
+      id-token: "write"  
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Deploy to prod-gcp
-        uses: nais/deploy/actions/deploy@v1
+        uses: nais/deploy/actions/deploy@v2
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
           RESOURCE: .nais/nais-prod.yaml
           IMAGE: docker.pkg.github.com/navikt/pensjon-pol-innsyn-tp/pensjon-pol-innsyn-tp:${{ github.event.inputs.version }}
