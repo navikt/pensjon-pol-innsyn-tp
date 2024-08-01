@@ -1,6 +1,5 @@
 package no.nav.pensjon.innsyn.tp
 
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder.okForJson
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.common.Json
@@ -27,6 +26,7 @@ import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
+import wiremock.com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import java.io.ByteArrayInputStream
 
 @SpringBootTest
