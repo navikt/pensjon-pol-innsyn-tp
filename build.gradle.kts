@@ -24,6 +24,7 @@ dependencies {
     implementation("net.logstash.logback", "logstash-logback-encoder", "8.0")
     implementation("no.nav.common", "token-client", "2.2023.01.10_13.49-81ddc732df3a")
     implementation("org.apache.poi", "poi-ooxml", "5.3.0")
+    implementation("org.codehaus.janino", "janino", "3.1.12")
     implementation("org.springframework.boot", "spring-boot-starter-web")
     implementation("org.springframework.boot", "spring-boot-starter-webflux")
     implementation("org.springframework.boot", "spring-boot-starter-actuator")

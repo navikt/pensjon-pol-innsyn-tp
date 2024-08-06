@@ -18,7 +18,7 @@
             <evaluator>
                 <matcher>
                     <Name>FNR</Name>
-                    <regex>*.\b(\d{6})\d{5}\b*.</regex>
+                    <regex>\b(\d{6})\d{5}\b</regex>
                 </matcher>
                 <expression>FNR.matches(formattedMessage)</expression>
             </evaluator>
