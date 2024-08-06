@@ -55,7 +55,7 @@
                 console.log("Unexpected error: " + error.type);
                 alert("Unexpected error: " + error.type);
             }
-            xhttp.open("GET", "api/innsyn/")
+            xhttp.open("GET", "api/innsyn")
             xhttp.setRequestHeader("fnr", fnr)
             xhttp.responseType = "blob"
             xhttp.send();
