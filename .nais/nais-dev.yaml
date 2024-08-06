@@ -22,6 +22,8 @@ spec:
       replyURLs:
         - https://pensjon-pol-innsyn-tp.intern.dev.nav.no/login/oauth2/code/azure
       claims:
+        groups:
+          - id: "8bb9b8d1-f46a-4ade-8ee8-5895eccdf8cf" # 0000-GA-PENSJON_SAKSBEHANDLER
         extra:
           - NAVident
   env:
