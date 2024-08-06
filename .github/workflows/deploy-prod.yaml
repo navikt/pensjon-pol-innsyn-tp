@@ -21,5 +21,5 @@ jobs:
         env:
           CLUSTER: prod-gcp
           RESOURCE: .nais/nais-prod.yaml
-          IMAGE: docker.pkg.github.com/navikt/pensjon-pol-innsyn-tp/pensjon-pol-innsyn-tp:${{ github.event.inputs.version }}
+          IMAGE: ghcr.io/navikt/pensjon-pol-innsyn-tp:${{ github.event.inputs.version }}
           TEAM: pensjonsamhandling
