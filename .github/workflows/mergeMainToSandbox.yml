@@ -3,6 +3,7 @@ name: Merge Main to Sandbox
 on:
   push:
     branches:
+      - main
       - master
 
 jobs:
@@ -33,7 +34,7 @@ jobs:
       - name: Merge Main to Sandbox
         uses: robotology/gh-action-nightly-merge@v1.5.2
         with:
-          stable_branch: master
+          stable_branch: ${{ github.ref_name }}
           development_branch: sandbox
           allow_ff: true
           allow_forks: true
