@@ -1,0 +1,41 @@
+name: Build and Deploy Sandbox
+
+on:
+  push:
+    branches:
+      - sandbox
+
+jobs:
+  build-and-deploy-sandbox:
+    name: Build and Deploy Sandbox
+    permissions:
+      contents: read
+      id-token: write
+      packages: write
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout
+      - uses: actions/checkout@v4
+
+      # Build
+      - name: Build
+        run: gradle clean xjc build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Build image
+      - name: Nais docker-build
+        uses: nais/docker-build-push@v0
+        id: docker-push
+        with:
+          team: pensjonsamhandling
+          tag: ${{ github.event.repository.name }}-sandbox
+          pull: true
+
+      # Deploy
+      - name: Deploy to dev-gcp
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: dev-gcp
+          RESOURCE: nais/dev.yaml
+          IMAGE: ${{ steps.docker-push.outputs.image }}
