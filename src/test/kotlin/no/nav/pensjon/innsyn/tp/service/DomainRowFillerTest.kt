@@ -13,7 +13,7 @@ class DomainRowFillerTest {
         const val b = "b"
         val c: LocalDate = LocalDate.of(1,1,1)
 
-        override val fields = setOf(::a,::b,::c)
+        override fun fields() = setOf(::a,::b,::c)
     }
 
     @Test
