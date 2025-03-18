@@ -35,7 +35,7 @@ jobs:
       # Build image
       - name: Nais docker-build
         uses: nais/docker-build-push@v0
-        id: docker-push
+        id: docker-build-push
         with:
           team: pensjonsamhandling
           tag: ${{ github.event.repository.name }}-sandbox
@@ -46,5 +46,5 @@ jobs:
         env:
           CLUSTER: dev-gcp
           RESOURCE: nais/dev.yaml
-          IMAGE: ${{ steps.docker-push.outputs.image }}
+          IMAGE: ${{ steps.docker-build-push.outputs.image }}
           TELEMETRY: ${{ steps.docker-build-push.outputs.telemetry }}
