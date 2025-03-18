@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - sandbox
+  workflow_dispatch:
 
 jobs:
   build-and-deploy-sandbox:
@@ -16,12 +17,20 @@ jobs:
     steps:
       # Checkout
       - uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: temurin
+          cache: gradle
 
       # Build
-      - name: Build
-        run: gradle clean xjc build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: current
+      - name: Build with Gradle
+        run: gradle build
 
       # Build image
       - name: Nais docker-build
@@ -30,7 +39,6 @@ jobs:
         with:
           team: pensjonsamhandling
           tag: ${{ github.event.repository.name }}-sandbox
-          pull: true
 
       # Deploy
       - name: Deploy to dev-gcp
@@ -39,3 +47,4 @@ jobs:
           CLUSTER: dev-gcp
           RESOURCE: nais/dev.yaml
           IMAGE: ${{ steps.docker-push.outputs.image }}
+          TELEMETRY: ${{ steps.docker-build-push.outputs.telemetry }}
