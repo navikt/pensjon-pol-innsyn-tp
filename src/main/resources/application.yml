@@ -1,6 +1,8 @@
 management:
-  endpoint.prometheus.enabled: true
   endpoints.web.exposure.include: prometheus, health
+  endpoint:
+    prometheus:
+      access: read_only
 spring.security.oauth2.client:
   provider:
     azure:
