@@ -3,12 +3,12 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 group = "no.nav.pensjon"
 version = "1"
 
-val jacksonVersion = "2.19.0"
+val jacksonVersion = "2.20.0"
 
 plugins {
-    kotlin("jvm") version "2.1.21"
-    kotlin("plugin.spring") version "2.1.21"
-    id("org.springframework.boot") version "3.4.5"
+    kotlin("jvm") version "2.2.20"
+    kotlin("plugin.spring") version "2.2.20"
+    id("org.springframework.boot") version "3.5.5"
     id("io.spring.dependency-management") version "1.1.7"
 }
 
@@ -20,10 +20,10 @@ dependencies {
     implementation(kotlin("reflect"))
     implementation("com.fasterxml.jackson.datatype", "jackson-datatype-jsr310", jacksonVersion)
     implementation("com.fasterxml.jackson.module", "jackson-module-kotlin", jacksonVersion)
-    implementation("io.micrometer", "micrometer-registry-prometheus", "1.15.0")
+    implementation("io.micrometer", "micrometer-registry-prometheus", "1.15.4")
     implementation("net.logstash.logback", "logstash-logback-encoder", "8.1")
     implementation("no.nav.common", "token-client", "2.2023.01.10_13.49-81ddc732df3a")
-    implementation("org.apache.poi", "poi-ooxml", "5.3.0")
+    implementation("org.apache.poi", "poi-ooxml", "5.4.1")
     implementation("org.springframework.boot", "spring-boot-starter-web")
     implementation("org.springframework.boot", "spring-boot-starter-webflux")
     implementation("org.springframework.boot", "spring-boot-starter-actuator")
