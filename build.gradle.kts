@@ -4,6 +4,7 @@ group = "no.nav.pensjon"
 version = "1"
 
 val jacksonVersion = "2.20.0"
+val commonsLang3Version = "3.18.0"
 
 plugins {
     kotlin("jvm") version "2.2.20"
@@ -30,6 +31,7 @@ dependencies {
     implementation("org.springframework.boot", "spring-boot-starter-validation")
     implementation("org.springframework.boot", "spring-boot-starter-oauth2-client")
     implementation("org.springframework.boot", "spring-boot-starter-thymeleaf")
+    implementation("org.apache.commons:commons-lang3:$commonsLang3Version")
     testImplementation(kotlin("test-junit5"))
     testRuntimeOnly("org.junit.platform", "junit-platform-launcher")
     testImplementation("org.wiremock", "wiremock-jetty12", "3.13.1")
@@ -48,5 +50,12 @@ tasks {
     }
     test {
         useJUnitPlatform()
+    }
+    configurations.all {
+        resolutionStrategy.eachDependency {
+            if (requested.group == "org.apache.commons" && requested.module.toString() == "commons-lang") {
+                useVersion(commonsLang3Version)
+            }
+        }
     }
 }
