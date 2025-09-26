@@ -4,7 +4,7 @@ group = "no.nav.pensjon"
 version = "1"
 
 val jacksonVersion = "2.20.0"
-val commonsLang3Version = "3.18.0"
+val commonsLang3Version = "3.19.0"
 
 plugins {
     kotlin("jvm") version "2.2.20"
