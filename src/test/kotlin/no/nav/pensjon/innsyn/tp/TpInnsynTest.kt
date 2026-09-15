@@ -1,18 +1,13 @@
 package no.nav.pensjon.innsyn.tp
 
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder.okForJson
 import com.github.tomakehurst.wiremock.client.WireMock.*
-import com.github.tomakehurst.wiremock.common.Json
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import com.github.tomakehurst.wiremock.matching.EqualToPattern
-import com.ninjasquad.springmockk.MockkBean
-import io.mockk.every
 import no.nav.pensjon.innsyn.tp.controller.FNR
 import no.nav.pensjon.innsyn.tp.domain.Forhold
 import no.nav.pensjon.innsyn.tp.domain.TpObjects.forhold
 import no.nav.pensjon.innsyn.tp.domain.TpObjects.person
-import no.nav.pensjon.innsyn.tp.service.AzureTokenService
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
@@ -37,14 +32,10 @@ internal class TpInnsynTest {
     @Autowired
     private lateinit var context: WebApplicationContext
 
-    @MockkBean
-    private lateinit var azureTokenService: AzureTokenService
-
     private lateinit var mockMvc: MockMvc
 
     @BeforeAll
     fun setup() {
-        Json.getObjectMapper().registerModule(JavaTimeModule())
         mockMvc = MockMvcBuilders
             .webAppContextSetup(context)
             .apply<DefaultMockMvcBuilder>(springSecurity())
@@ -53,7 +44,6 @@ internal class TpInnsynTest {
 
     @Test
     fun `Generates TP worksheet`() {
-        every { azureTokenService.getOnBehalOfToken(any()) } returns "bogus"
         stubFor(
             get("/api/pol").withHeader(FNR, EqualToPattern(person))
                 .willReturn(okForJson(forhold))
@@ -72,7 +62,6 @@ internal class TpInnsynTest {
 
     @Test
     fun `Handles missing data`() {
-        every { azureTokenService.getOnBehalOfToken(any()) } returns "bogus"
         stubFor(
             get("/api/pol").withHeader(FNR, EqualToPattern("00000000000"))
                 .willReturn(okForJson(emptyList<Forhold>()))
@@ -89,7 +78,6 @@ internal class TpInnsynTest {
 
     @Test
     fun `Handles not found response`() {
-        every { azureTokenService.getOnBehalOfToken(any()) } returns "bogus"
         stubFor(
             get("/api/pol").withHeader(FNR, EqualToPattern("11111111111"))
                 .willReturn(notFound())
@@ -106,7 +94,6 @@ internal class TpInnsynTest {
 
     @Test
     fun `Handles error response`() {
-        every { azureTokenService.getOnBehalOfToken(any()) } returns "bogus"
         stubFor(
             get("/api/pol").withHeader(FNR, EqualToPattern("11111111111"))
                 .willReturn(serviceUnavailable())
