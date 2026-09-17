@@ -9,6 +9,7 @@ spring.security.oauth2.client:
       token-uri: ${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT}
       issuer-uri: ${AZURE_OPENID_CONFIG_ISSUER}
       jwk-set-uri: ${AZURE_OPENID_CONFIG_JWKS_URI}
+      user-info-uri: ""
   registration:
     azure:
       authorization-grant-type: authorization_code
