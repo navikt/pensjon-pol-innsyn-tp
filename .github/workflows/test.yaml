@@ -22,3 +22,5 @@ jobs:
           gradle-version: current
       - name: Build with Gradle
         run: gradle test
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
