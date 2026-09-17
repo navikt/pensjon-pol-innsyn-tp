@@ -1,16 +1,6 @@
 tp:
   url: http://localhost:8089
   scope: bogus
-no.nav.security.jwt.client:
-  registration:
-    azure:
-      token-endpoint-url: http://localhost:1111/v2.0/token
-      grant-type: urn:ietf:params:oauth:grant-type:jwt-bearer
-      scope: ${tp.scope}
-      authentication:
-        client-id: pol-innsyn
-        client-secret: dummy
-        client-auth-method: client_secret_basic
 spring.security.oauth2.client:
   provider.azure:
     authorization-uri: test
@@ -22,5 +12,6 @@ spring.security.oauth2.client:
     client-name: azure
     client-secret: dummy
     provider: azure
-    scope: openid
+    scope:
+      - openid
     redirect-uri: test

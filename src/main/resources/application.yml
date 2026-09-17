@@ -3,16 +3,6 @@ management:
   endpoint:
     prometheus:
       access: read_only
-no.nav.security.jwt.client:
-  registration:
-    azure:
-      token-endpoint-url: ${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT}
-      grant-type: urn:ietf:params:oauth:grant-type:jwt-bearer
-      scope: ${tp.scope}
-      authentication:
-        client-id: ${AZURE_APP_CLIENT_ID}
-        client-jwk: ${AZURE_APP_JWK}
-        client-auth-method: private_key_jwt
 spring.security.oauth2.client:
   provider:
     azure:

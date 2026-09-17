@@ -16,37 +16,28 @@ java {
 
 repositories {
     mavenCentral()
-    maven {
-        url = uri("https://maven.pkg.github.com/navikt/token-support")
-        credentials {
-            username = "token"
-            password = System.getenv("GITHUB_TOKEN")
-        }
-    }
 }
 
 dependencies {
     implementation(kotlin("reflect"))
     implementation("io.micrometer:micrometer-registry-prometheus:1.17.1")
     implementation("net.logstash.logback:logstash-logback-encoder:9.0")
-    implementation("no.nav.security:token-client-spring:6.0.12")
     implementation("org.apache.poi:poi-ooxml:5.5.1")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+    implementation("org.springframework.boot:spring-boot-starter-security-oauth2-client")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.apache.commons:commons-lang3:$commonsLang3Version")
     testImplementation(kotlin("test-junit5"))
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation("org.wiremock.integrations:wiremock-spring-boot:4.2.3")
     testImplementation("com.ninja-squad:springmockk:5.0.1")
-    testImplementation("org.springframework.boot:spring-boot-starter-security-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-security-oauth2-client-test")
     testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test") {
         exclude(module = "mockito-core")
     }
-    testImplementation("org.springframework.security:spring-security-test")
 }
 
 tasks {
