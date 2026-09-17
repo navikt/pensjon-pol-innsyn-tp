@@ -16,4 +16,5 @@ spring.security.oauth2.client:
       client-secret: ${AZURE_APP_CLIENT_SECRET}
       scope:
         - openid
+        - profile
         - ${scope}
