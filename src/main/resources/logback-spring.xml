@@ -14,7 +14,7 @@
         </encoder>
     </appender>
 
-    <springProfile name="dev | test">
+    <springProfile name="dev">
         <logger name="no.nav" level="DEBUG"/>
     </springProfile>
 

@@ -5,12 +5,20 @@ management:
       access: read_only
 spring.security.oauth2.client:
   provider:
+    tp:
+      token-uri: ${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT}
     azure:
       token-uri: ${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT}
       issuer-uri: ${AZURE_OPENID_CONFIG_ISSUER}
       jwk-set-uri: ${AZURE_OPENID_CONFIG_JWKS_URI}
       user-info-uri: ""
   registration:
+    tp:
+      authorization-grant-type: client_credentials
+      client-id: ${AZURE_APP_CLIENT_ID}
+      client-secret: ${AZURE_APP_CLIENT_SECRET}
+      scope:
+        - ${tp.scope}
     azure:
       authorization-grant-type: authorization_code
       client-id: ${AZURE_APP_CLIENT_ID}

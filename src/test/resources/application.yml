@@ -15,3 +15,5 @@ spring.security.oauth2.client:
     scope:
       - openid
     redirect-uri: test
+logging.level:
+  no.nav: DEBUG
