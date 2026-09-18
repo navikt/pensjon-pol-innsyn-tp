@@ -19,12 +19,12 @@ spec:
   azure:
     application:
       enabled: true
-      tenant: nav.no
       replyURLs:
         - https://pensjon-pol-innsyn-tp.intern.dev.nav.no/login/oauth2/code/azure
       claims:
         groups:
-          - id: "457e28b8-7bc1-4c84-b5c8-404025dd096a" #Pensjon-samhandling
+          - id: "da471520-ea8f-4590-aca9-579321cfd9ed" # All Users
+          - id: "8bb9b8d1-f46a-4ade-8ee8-5895eccdf8cf" # 0000-GA-PENSJON_SAKSBEHANDLER
         extra:
           - NAVident
   env:
