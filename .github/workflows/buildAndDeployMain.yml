@@ -41,7 +41,7 @@ jobs:
           tag: ${{ github.event.repository.name }}-main
 
       - name: Deploy to prod-gcp
-        uses: nais/deploy/actions/deploy@v2
+        uses: nais/deploy/actions/deploy@v3
         env:
           CLUSTER: prod-gcp
           RESOURCE: nais/prod.yaml
