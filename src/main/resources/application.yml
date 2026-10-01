@@ -14,7 +14,7 @@ spring.security.oauth2.client:
       user-info-uri: ""
   registration:
     tp:
-      authorization-grant-type: client_credentials
+      authorization-grant-type: on_behalf_of
       client-id: ${AZURE_APP_CLIENT_ID}
       client-secret: ${AZURE_APP_CLIENT_SECRET}
       scope:
