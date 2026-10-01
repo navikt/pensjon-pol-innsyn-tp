@@ -20,6 +20,7 @@ repositories {
 
 dependencies {
     implementation(kotlin("reflect"))
+    implementation("com.azure.spring:spring-cloud-azure-starter-active-directory:7.4.0")
     implementation("io.micrometer:micrometer-registry-prometheus:1.17.1")
     implementation("net.logstash.logback:logstash-logback-encoder:9.0")
     implementation("org.apache.poi:poi-ooxml:5.5.1")
@@ -32,7 +33,7 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:$commonsLang3Version")
     testImplementation(kotlin("test-junit5"))
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    testImplementation("org.wiremock.integrations:wiremock-spring-boot:4.2.3")
+    testImplementation("org.wiremock.integrations:wiremock-spring-boot:4.4.2")
     testImplementation("com.ninja-squad:springmockk:5.0.1")
     testImplementation("org.springframework.boot:spring-boot-starter-security-oauth2-client-test")
     testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test") {
