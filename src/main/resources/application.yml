@@ -6,6 +6,7 @@ management:
 spring:
   cloud.azure.active-directory:
     enabled: true
+    application-type: web_application_and_resource_server
     authorization-clients:
       tp:
         authorization-grant-type: on_behalf_of
@@ -14,19 +15,5 @@ spring:
     credential:
       client-id: ${AZURE_APP_CLIENT_ID}
       client-secret: ${AZURE_APP_CLIENT_SECRET}
-  security.oauth2.client:
-    provider:
-      azure:
-        token-uri: ${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT}
-        issuer-uri: ${AZURE_OPENID_CONFIG_ISSUER}
-        jwk-set-uri: ${AZURE_OPENID_CONFIG_JWKS_URI}
-        user-info-uri: ""
-    registration:
-      azure:
-        authorization-grant-type: authorization_code
-        client-id: ${AZURE_APP_CLIENT_ID}
-        client-secret: ${AZURE_APP_CLIENT_SECRET}
-        scope:
-          - openid
-          - profile
-          - ${scope}
+    profile:
+      tenant-id: ${AZURE_APP_TENANT_ID}

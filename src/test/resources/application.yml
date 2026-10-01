@@ -1,19 +1,19 @@
 tp:
   url: http://localhost:8089
   scope: bogus
-spring.security.oauth2.client:
-  provider.azure:
-    authorization-uri: test
-    jwk-set-uri: test
-    token-uri: test
-  registration.azure:
-    authorization-grant-type: authorization_code
-    client-id: pol-innsyn
-    client-name: azure
-    client-secret: dummy
-    provider: azure
-    scope:
-      - openid
-    redirect-uri: test
+spring:
+  cloud.azure.active-directory:
+    enabled: true
+    application-type: web_application_and_resource_server
+    authorization-clients:
+      tp:
+        authorization-grant-type: on_behalf_of
+        scopes:
+          - ${tp.scope}
+    credential:
+      client-id: pol-innsyn
+      client-secret: dummy
+    profile:
+      tenant-id: 00000000-0000-0000-0000-000000000000
 logging.level:
   no.nav: DEBUG

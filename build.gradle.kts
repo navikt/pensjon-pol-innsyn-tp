@@ -29,6 +29,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-security-oauth2-client")
+    implementation("org.springframework.boot:spring-boot-starter-security-oauth2-resource-server")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.apache.commons:commons-lang3:$commonsLang3Version")
     testImplementation(kotlin("test-junit5"))
@@ -36,6 +37,7 @@ dependencies {
     testImplementation("org.wiremock.integrations:wiremock-spring-boot:4.4.2")
     testImplementation("com.ninja-squad:springmockk:5.0.1")
     testImplementation("org.springframework.boot:spring-boot-starter-security-oauth2-client-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-security-oauth2-resource-server-test")
     testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test") {
         exclude(module = "mockito-core")
     }

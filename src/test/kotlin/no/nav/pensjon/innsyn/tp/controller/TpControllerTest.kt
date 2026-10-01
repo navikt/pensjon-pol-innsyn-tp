@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oauth2Login
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
 import org.springframework.test.context.web.WebAppConfiguration
@@ -42,6 +43,10 @@ internal class TpControllerTest {
 
     @MockkBean
     private lateinit var tpSheetProducer: TpSheetProducer
+
+    @MockkBean
+    @Suppress("unused")
+    private lateinit var clientRegistrationRepository: ClientRegistrationRepository
 
     @BeforeAll
     fun setup() {
