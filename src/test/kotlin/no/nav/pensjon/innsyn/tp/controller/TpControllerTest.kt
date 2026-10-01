@@ -15,6 +15,7 @@ import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oauth2Login
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
 import org.springframework.test.context.web.WebAppConfiguration
@@ -48,6 +49,10 @@ internal class TpControllerTest {
     @Suppress("unused")
     private lateinit var clientRegistrationRepository: ClientRegistrationRepository
 
+    @MockkBean
+    @Suppress("unused")
+    private lateinit var authorizedClientRepository: OAuth2AuthorizedClientRepository
+
     @BeforeAll
     fun setup() {
         mockMvc = MockMvcBuilders
@@ -58,7 +63,7 @@ internal class TpControllerTest {
 
     @Test
     fun `Returns 200 and valid worksheet`() {
-        every { tpService.getData(eq("00000000000")) } returns forhold
+        every { tpService.getData(eq("00000000000"), any()) } returns forhold
         every { tpSheetProducer.produceWorksheet(forhold) } returns XSSFWorkbook(FileInputStream(File("tp-test-worksheet.xlsx")))
         mockMvc.get("/api/innsyn") {
             with(oauth2Login())

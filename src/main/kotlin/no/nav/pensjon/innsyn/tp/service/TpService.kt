@@ -1,15 +1,12 @@
 package no.nav.pensjon.innsyn.tp.service
 
-import com.nimbusds.jwt.JWTParser
 import no.nav.pensjon.innsyn.tp.controller.FNR
 import no.nav.pensjon.innsyn.tp.domain.Forhold
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient
 import org.springframework.security.oauth2.client.web.ClientAttributes.clientRegistrationId
-import org.springframework.security.oauth2.client.web.client.OAuth2ClientHttpRequestInterceptor
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.RestClientException
@@ -18,30 +15,19 @@ import org.springframework.web.server.ResponseStatusException
 
 @Service
 class TpService(
-    @Value($$"${tp.url}") tpURL: String,
-    oAuth2AuthorizedClientManager: OAuth2AuthorizedClientManager
+    @Value($$"${tp.url}") tpURL: String
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
     private val restClient = RestClient.builder()
         .baseUrl(tpURL)
-        .requestInterceptor(OAuth2ClientHttpRequestInterceptor(oAuth2AuthorizedClientManager))
-        .requestInterceptor { request, bytes, execution ->
-            try {
-                val token = request.headers.getFirst(HttpHeaders.AUTHORIZATION)?.removePrefix("Bearer ")
-                val jwt = JWTParser.parse(token)
-                log.debug("Using token with scope: {}", jwt.jwtClaimsSet.getClaim("scope"))
-            } catch (e: Exception) {
-                log.warn("Failed to log token", e)
-            }
-            execution.execute(request, bytes)
-        }
         .build()
 
-    fun getData(fnr: String): Iterable<Forhold> = try {
+    fun getData(fnr: String, client: OAuth2AuthorizedClient): Iterable<Forhold> = try {
         restClient.get()
             .uri("/api/pol")
             .headers {
                 it.set(FNR, fnr)
+                it.setBearerAuth(client.accessToken.tokenValue)
             }
             .attributes(clientRegistrationId("tp"))
             .retrieve()
