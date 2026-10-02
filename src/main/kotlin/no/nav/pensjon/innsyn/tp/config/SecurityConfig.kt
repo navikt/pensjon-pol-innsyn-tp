@@ -12,7 +12,6 @@ import org.springframework.security.oauth2.client.endpoint.RestClientJwtBearerTo
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizedClientManager
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository
-import org.springframework.security.oauth2.core.OAuth2AccessToken
 import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
 import org.springframework.security.web.SecurityFilterChain
@@ -54,7 +53,7 @@ class SecurityConfig {
                 })
                 setJwtAssertionResolver { context ->
                     when (val auth = context.principal) {
-                        is OAuth2AuthenticationToken -> Jwt.withTokenValue((auth.credentials as OAuth2AccessToken).tokenValue).build()
+                        is OAuth2AuthenticationToken -> Jwt.withTokenValue(auth.credentials as String).build()
                         is JwtAuthenticationToken -> auth.token
                         else -> throw IllegalStateException("Cannot resolve JWT assertion from principal: ${auth.javaClass}")
                     }
