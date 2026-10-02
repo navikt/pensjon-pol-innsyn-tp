@@ -4,15 +4,12 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.oauth2.client.JwtBearerOAuth2AuthorizedClientProvider
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProviderBuilder
+import org.springframework.security.oauth2.client.*
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken
 import org.springframework.security.oauth2.client.endpoint.RestClientJwtBearerTokenResponseClient
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizedClientManager
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository
-import org.springframework.security.oauth2.core.oidc.user.OidcUser
 import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
 import org.springframework.security.web.SecurityFilterChain
@@ -37,7 +34,8 @@ class SecurityConfig {
     @Bean
     fun oAuth2AuthorizedClientManager(
         clientRegistrationRepository: ClientRegistrationRepository,
-        oauth2AuthorizedClientRepository: OAuth2AuthorizedClientRepository
+        oauth2AuthorizedClientRepository: OAuth2AuthorizedClientRepository,
+        authorizedClientService: OAuth2AuthorizedClientService
     ): OAuth2AuthorizedClientManager = DefaultOAuth2AuthorizedClientManager(
         clientRegistrationRepository,
         oauth2AuthorizedClientRepository
@@ -54,7 +52,12 @@ class SecurityConfig {
                 })
                 setJwtAssertionResolver { context ->
                     when (val auth = context.principal) {
-                        is OAuth2AuthenticationToken -> Jwt.withTokenValue((auth.principal as OidcUser).idToken.tokenValue).build()
+                        is OAuth2AuthenticationToken -> Jwt.withTokenValue(
+                            authorizedClientService.loadAuthorizedClient<OAuth2AuthorizedClient>(
+                                auth.authorizedClientRegistrationId,
+                                auth.name
+                            )!!.accessToken.tokenValue
+                        ).build()
                         is JwtAuthenticationToken -> auth.token
                         else -> throw IllegalStateException("Cannot resolve JWT assertion from principal: ${auth.javaClass}")
                     }
