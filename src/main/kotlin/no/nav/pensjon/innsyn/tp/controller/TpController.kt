@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory.getLogger
 import org.springframework.http.HttpHeaders.CONNECTION
 import org.springframework.http.HttpHeaders.CONTENT_DISPOSITION
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager
 import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
@@ -19,7 +20,8 @@ import org.springframework.web.bind.annotation.RequestHeader
 @Controller
 class TpController(
     private val worksheetProducer: TpSheetProducer,
-    private val tpService: TpService
+    private val tpService: TpService,
+    private val oAuth2AuthorizedClientManager: OAuth2AuthorizedClientManager
 ) {
     val log: Logger = getLogger(javaClass)
 
