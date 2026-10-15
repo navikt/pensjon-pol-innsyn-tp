@@ -4,7 +4,7 @@ import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import no.nav.pensjon.innsyn.tp.CONTENT_TYPE_EXCEL
 import no.nav.pensjon.innsyn.tp.assertEqualsTestData
-import no.nav.pensjon.innsyn.tp.config.SecurityConfig
+import no.nav.pensjon.innsyn.tp.security.SecurityConfig
 import no.nav.pensjon.innsyn.tp.domain.TpObjects.forhold
 import no.nav.pensjon.innsyn.tp.service.TpService
 import no.nav.pensjon.innsyn.tp.service.TpSheetProducer

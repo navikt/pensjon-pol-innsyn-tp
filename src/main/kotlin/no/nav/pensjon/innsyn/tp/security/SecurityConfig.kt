@@ -1,4 +1,4 @@
-package no.nav.pensjon.innsyn.tp.config
+package no.nav.pensjon.innsyn.tp.security
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
