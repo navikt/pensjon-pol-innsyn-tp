@@ -23,7 +23,9 @@ class TpService(
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
     private val authentication
-        get() = SecurityContextHolder.getContext().authentication ?: throw ResponseStatusException(UNAUTHORIZED)
+        get() = SecurityContextHolder.getContext().authentication ?: throw ResponseStatusException(UNAUTHORIZED).also {
+            log.error("Authentication not found.")
+        }
     private val authorizeRequest
         get() = OAuth2AuthorizeRequest.withClientRegistrationId("tp")
             .principal(authentication)
@@ -32,7 +34,7 @@ class TpService(
         get() = authorize(authorizeRequest) ?: throw ResponseStatusException(
             INTERNAL_SERVER_ERROR,
             "Client registration for downstream server authorization not found."
-        )
+        ).also { log.error(it.reason) }
 
     private val restClient = RestClient.builder()
         .baseUrl(tpURL)

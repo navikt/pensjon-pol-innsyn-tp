@@ -17,3 +17,6 @@ spring:
       client-secret: ${AZURE_APP_CLIENT_SECRET}
     profile:
       tenant-id: ${AZURE_APP_TENANT_ID}
+  web:
+    error:
+      include-message: always
