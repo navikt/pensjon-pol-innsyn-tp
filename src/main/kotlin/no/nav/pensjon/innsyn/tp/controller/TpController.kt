@@ -10,9 +10,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
 import org.springframework.http.HttpHeaders.CONNECTION
 import org.springframework.http.HttpHeaders.CONTENT_DISPOSITION
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager
-import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestHeader
@@ -20,19 +17,17 @@ import org.springframework.web.bind.annotation.RequestHeader
 @Controller
 class TpController(
     private val worksheetProducer: TpSheetProducer,
-    private val tpService: TpService,
-    private val oAuth2AuthorizedClientManager: OAuth2AuthorizedClientManager
+    private val tpService: TpService
 ) {
     val log: Logger = getLogger(javaClass)
 
     @GetMapping("/api/innsyn")
     fun getTpInnsyn(
         @RequestHeader(FNR) fnr: String,
-        @RegisteredOAuth2AuthorizedClient("tp") client: OAuth2AuthorizedClient,
         response: HttpServletResponse
     ) {
         log.info("Fetching data for $fnr.")
-        val forhold = tpService.getData(fnr, client)
+        val forhold = tpService.getData(fnr)
         val worksheet = SXSSFWorkbook(worksheetProducer.produceWorksheet(forhold))
         log.info("Worksheet produced.")
         response.apply {
