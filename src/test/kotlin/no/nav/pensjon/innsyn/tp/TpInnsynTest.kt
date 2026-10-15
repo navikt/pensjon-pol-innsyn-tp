@@ -4,16 +4,22 @@ import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder.okForJso
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import com.github.tomakehurst.wiremock.matching.EqualToPattern
+import com.ninjasquad.springmockk.MockkBean
+import io.mockk.every
 import no.nav.pensjon.innsyn.tp.controller.FNR
 import no.nav.pensjon.innsyn.tp.domain.Forhold
 import no.nav.pensjon.innsyn.tp.domain.TpObjects.forhold
 import no.nav.pensjon.innsyn.tp.domain.TpObjects.person
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository
+import org.springframework.security.oauth2.core.OAuth2AccessToken
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oauth2Login
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
 import org.springframework.test.context.web.WebAppConfiguration
@@ -23,6 +29,7 @@ import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 import java.io.ByteArrayInputStream
+import java.time.Instant
 
 @SpringBootTest
 @WireMockTest(httpPort = 8089)
@@ -32,6 +39,12 @@ internal class TpInnsynTest {
     @Autowired
     private lateinit var context: WebApplicationContext
 
+    @MockkBean
+    private lateinit var oAuth2AuthorizedClientRepository: OAuth2AuthorizedClientRepository
+
+    @MockkBean
+    private lateinit var oAuth2AuthorizedClient: OAuth2AuthorizedClient
+
     private lateinit var mockMvc: MockMvc
 
     @BeforeAll
@@ -40,6 +53,17 @@ internal class TpInnsynTest {
             .webAppContextSetup(context)
             .apply<DefaultMockMvcBuilder>(springSecurity())
             .build()
+    }
+
+    @BeforeEach
+    fun mock() {
+        every { oAuth2AuthorizedClientRepository.loadAuthorizedClient<OAuth2AuthorizedClient>(any(), any(), any()) } returns oAuth2AuthorizedClient
+        every { oAuth2AuthorizedClient.accessToken } returns OAuth2AccessToken(
+            OAuth2AccessToken.TokenType.BEARER,
+            "token",
+            Instant.now(),
+            Instant.now().plusSeconds(50)
+        )
     }
 
     @Test
