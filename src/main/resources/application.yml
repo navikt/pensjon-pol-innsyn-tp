@@ -6,6 +6,7 @@ management:
 spring:
   cloud.azure.active-directory:
     enabled: true
+    app-id-uri: api://${AZURE_APP_CLIENT_ID}
     application-type: web_application_and_resource_server
     authorization-clients:
       tp:
