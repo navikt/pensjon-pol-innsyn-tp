@@ -1,11 +1,11 @@
 group = "no.nav.pensjon"
 version = "1"
 
-val commonsLang3Version = "3.20.0"
+val commonsLang3Version = "3.21.0"
 
 plugins {
-    kotlin("jvm") version "2.4.20"
-    kotlin("plugin.spring") version "2.4.20"
+    kotlin("jvm") version "2.4.21"
+    kotlin("plugin.spring") version "2.4.21"
     id("org.springframework.boot") version "4.1.1"
     id("io.spring.dependency-management") version "1.1.7"
 }
@@ -34,7 +34,7 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:$commonsLang3Version")
     testImplementation(kotlin("test-junit5"))
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    testImplementation("org.wiremock.integrations:wiremock-spring-boot:4.4.2")
+    testImplementation("org.wiremock.integrations:wiremock-spring-boot:4.4.3")
     testImplementation("com.ninja-squad:springmockk:5.0.1")
     testImplementation("org.springframework.boot:spring-boot-starter-security-oauth2-client-test")
     testImplementation("org.springframework.boot:spring-boot-starter-security-oauth2-resource-server-test")
