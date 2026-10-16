@@ -49,8 +49,15 @@ tasks {
     }
     configurations.all {
         resolutionStrategy.eachDependency {
-            if (requested.group == "org.apache.commons" && requested.module.toString() == "commons-lang") {
-                useVersion(commonsLang3Version)
+            when (requested.group) {
+                "com.fasterxml.jackson.core" if (requested.name == "jackson-core" || requested.name == "jackson-databind")
+                    -> useVersion("2.22.3")
+                "tools.jackson.core" -> useVersion("3.2.3")
+                "ch.qos.logback" -> useVersion("1.6.5")
+                "org.apache.commons" if requested.name == "commons-lang" -> useVersion(commonsLang3Version)
+                "org.apache.qpid" -> useVersion("0.35.0")
+                "io.netty" if (requested.name.startsWith("netty-codec-http") || requested.name == "netty-codec-classes-quic")
+                    -> useVersion("4.2.19.Final")
             }
         }
     }
