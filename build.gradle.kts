@@ -56,8 +56,14 @@ tasks {
                 "ch.qos.logback" -> useVersion("1.6.5")
                 "org.apache.commons" if requested.name == "commons-lang" -> useVersion(commonsLang3Version)
                 "org.apache.qpid" -> useVersion("0.35.0")
-                "io.netty" if (requested.name.startsWith("netty-codec-http") || requested.name == "netty-codec-classes-quic")
-                    -> useVersion("4.2.19.Final")
+                "io.netty" if (requested.version == "4.2.17.Final"
+                        || requested.name.startsWith("netty-buffer")
+                        || requested.name.startsWith("netty-codec")
+                        || requested.name.startsWith("netty-common")
+                        || requested.name.startsWith("netty-handler")
+                        || requested.name.startsWith("netty-resolver")
+                        || requested.name.startsWith("netty-transport")
+                ) -> useVersion("4.2.19.Final")
             }
         }
     }
