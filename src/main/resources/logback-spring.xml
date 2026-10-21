@@ -14,10 +14,7 @@
         </encoder>
     </appender>
 
-    <springProfile name="prod | dev">
-        <logger name="no.nav" level="INFO"/>
-    </springProfile>
-    <springProfile name="test | vtp-pensjon">
+    <springProfile name="dev">
         <logger name="no.nav" level="DEBUG"/>
     </springProfile>
 

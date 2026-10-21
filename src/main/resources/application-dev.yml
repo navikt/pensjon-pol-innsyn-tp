@@ -1,3 +1,4 @@
+AZURE_APP_TENANT_ID: 966ac572-f5b7-4bbe-aa88-c76419c0f851
 tp:
   url: https://tp-api-q1.dev-fss-pub.nais.io
   scope: api://dev-fss.pensjonsamhandling.tp-q1/tp_innsyn
