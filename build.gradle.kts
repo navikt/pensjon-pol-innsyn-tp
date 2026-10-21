@@ -52,6 +52,7 @@ tasks {
             when (requested.group) {
                 "com.fasterxml.jackson.core" if (requested.name == "jackson-core" || requested.name == "jackson-databind")
                     -> useVersion("2.22.3")
+                "com.fasterxml.jackson.core" if requested.name == "jackson-annotations" -> useVersion("2.22")
                 "tools.jackson.core" -> useVersion("3.2.3")
                 "ch.qos.logback" -> useVersion("1.6.5")
                 "org.apache.commons" if requested.name == "commons-lang" -> useVersion(commonsLang3Version)
