@@ -28,6 +28,7 @@ spring:
 logging:
   pattern:
     console: '%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} - %replace{%msg}{\b(\d{6})\d{5}\b}{$1*****}%n'
+    file: '%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} - %replace{%msg}{\b(\d{6})\d{5}\b}{$1*****}%n'
   structured:
     format:
       console: logstash
