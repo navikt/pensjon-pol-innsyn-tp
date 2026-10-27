@@ -21,8 +21,7 @@ repositories {
 dependencies {
     implementation(kotlin("reflect"))
     implementation("com.azure.spring:spring-cloud-azure-starter-active-directory:7.4.0")
-    implementation("io.micrometer:micrometer-registry-prometheus:1.17.1")
-    implementation("net.logstash.logback:logstash-logback-encoder:9.0")
+    implementation("io.micrometer:micrometer-registry-prometheus:1.17.2")
     implementation("org.apache.poi:poi-ooxml:5.5.1")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
@@ -53,10 +52,12 @@ tasks {
                 "com.fasterxml.jackson.core" if (requested.name == "jackson-core" || requested.name == "jackson-databind")
                     -> useVersion("2.22.3")
                 "com.fasterxml.jackson.core" if requested.name == "jackson-annotations" -> useVersion("2.22")
-                "tools.jackson.core" -> useVersion("3.2.3")
+                "tools.jackson.core" -> useVersion("3.2.4")
                 "ch.qos.logback" -> useVersion("1.6.5")
                 "org.apache.commons" if requested.name == "commons-lang" -> useVersion(commonsLang3Version)
                 "org.apache.qpid" -> useVersion("0.35.0")
+                "org.apache.tomcat.embed" -> useVersion("11.0.27")
+                "org.ow2.asm" -> useVersion("9.11.1")
                 "io.netty" if (requested.version == "4.2.17.Final"
                         || requested.name.startsWith("netty-buffer")
                         || requested.name.startsWith("netty-codec")
