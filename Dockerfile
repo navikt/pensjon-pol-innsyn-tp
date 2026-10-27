@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y \
     libfreetype6 \
     && rm -rf /var/lib/apt/lists/*
 
-FROM gcr.io/distroless/java21-debian12:nonroot
+FROM gcr.io/distroless/java21-debian13:nonroot
 COPY --from=build /usr/lib/x86_64-linux-gnu/libfreetype.so.6 /usr/lib/x86_64-linux-gnu/
 COPY --from=build /usr/share/fonts /usr/share/fonts
 COPY --from=build /etc/fonts /etc/fonts
