@@ -23,7 +23,7 @@ dependencies {
     implementation("com.azure.spring:spring-cloud-azure-starter-active-directory:7.4.0")
     implementation("io.micrometer:micrometer-registry-prometheus:1.17.2")
     implementation("net.logstash.logback:logstash-logback-encoder:9.0")
-    implementation("org.apache.poi:poi-ooxml:5.5.1")
+    implementation("org.apache.poi:poi-ooxml:6.0.0")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
