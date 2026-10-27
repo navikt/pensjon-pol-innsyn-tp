@@ -1,9 +1,7 @@
 package no.nav.pensjon.innsyn.tp
 
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder.okForJson
 import com.github.tomakehurst.wiremock.client.WireMock.*
-import com.github.tomakehurst.wiremock.common.Json
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import com.github.tomakehurst.wiremock.matching.EqualToPattern
 import com.ninjasquad.springmockk.MockkBean
@@ -12,13 +10,16 @@ import no.nav.pensjon.innsyn.tp.controller.FNR
 import no.nav.pensjon.innsyn.tp.domain.Forhold
 import no.nav.pensjon.innsyn.tp.domain.TpObjects.forhold
 import no.nav.pensjon.innsyn.tp.domain.TpObjects.person
-import no.nav.pensjon.innsyn.tp.service.AzureTokenService
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository
+import org.springframework.security.oauth2.core.OAuth2AccessToken
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oauth2Login
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
 import org.springframework.test.context.web.WebAppConfiguration
@@ -28,6 +29,7 @@ import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 import java.io.ByteArrayInputStream
+import java.time.Instant
 
 @SpringBootTest
 @WireMockTest(httpPort = 8089)
@@ -38,22 +40,34 @@ internal class TpInnsynTest {
     private lateinit var context: WebApplicationContext
 
     @MockkBean
-    private lateinit var azureTokenService: AzureTokenService
+    private lateinit var oAuth2AuthorizedClientRepository: OAuth2AuthorizedClientRepository
+
+    @MockkBean
+    private lateinit var oAuth2AuthorizedClient: OAuth2AuthorizedClient
 
     private lateinit var mockMvc: MockMvc
 
     @BeforeAll
     fun setup() {
-        Json.getObjectMapper().registerModule(JavaTimeModule())
         mockMvc = MockMvcBuilders
             .webAppContextSetup(context)
             .apply<DefaultMockMvcBuilder>(springSecurity())
             .build()
     }
 
+    @BeforeEach
+    fun mock() {
+        every { oAuth2AuthorizedClientRepository.loadAuthorizedClient<OAuth2AuthorizedClient>(any(), any(), any()) } returns oAuth2AuthorizedClient
+        every { oAuth2AuthorizedClient.accessToken } returns OAuth2AccessToken(
+            OAuth2AccessToken.TokenType.BEARER,
+            "token",
+            Instant.now(),
+            Instant.now().plusSeconds(50)
+        )
+    }
+
     @Test
     fun `Generates TP worksheet`() {
-        every { azureTokenService.getOnBehalOfToken(any()) } returns "bogus"
         stubFor(
             get("/api/pol").withHeader(FNR, EqualToPattern(person))
                 .willReturn(okForJson(forhold))
@@ -72,7 +86,6 @@ internal class TpInnsynTest {
 
     @Test
     fun `Handles missing data`() {
-        every { azureTokenService.getOnBehalOfToken(any()) } returns "bogus"
         stubFor(
             get("/api/pol").withHeader(FNR, EqualToPattern("00000000000"))
                 .willReturn(okForJson(emptyList<Forhold>()))
@@ -89,7 +102,6 @@ internal class TpInnsynTest {
 
     @Test
     fun `Handles not found response`() {
-        every { azureTokenService.getOnBehalOfToken(any()) } returns "bogus"
         stubFor(
             get("/api/pol").withHeader(FNR, EqualToPattern("11111111111"))
                 .willReturn(notFound())
@@ -106,7 +118,6 @@ internal class TpInnsynTest {
 
     @Test
     fun `Handles error response`() {
-        every { azureTokenService.getOnBehalOfToken(any()) } returns "bogus"
         stubFor(
             get("/api/pol").withHeader(FNR, EqualToPattern("11111111111"))
                 .willReturn(serviceUnavailable())

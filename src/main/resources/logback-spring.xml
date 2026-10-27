@@ -5,19 +5,16 @@
 
     <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-            <jsonGeneratorDecorator class="net.logstash.logback.mask.MaskingJsonGeneratorDecorator">
+            <decorator class="net.logstash.logback.mask.MaskingJsonGeneratorDecorator">
                 <valueMask>
                     <value>\b(\d{6})\d{5}\b</value>
                     <mask>$1*****</mask>
                 </valueMask>
-            </jsonGeneratorDecorator>
+            </decorator>
         </encoder>
     </appender>
 
-    <springProfile name="prod | dev">
-        <logger name="no.nav" level="INFO"/>
-    </springProfile>
-    <springProfile name="test | vtp-pensjon">
+    <springProfile name="dev">
         <logger name="no.nav" level="DEBUG"/>
     </springProfile>
 
