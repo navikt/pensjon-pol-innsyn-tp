@@ -22,6 +22,7 @@ dependencies {
     implementation(kotlin("reflect"))
     implementation("com.azure.spring:spring-cloud-azure-starter-active-directory:7.4.0")
     implementation("io.micrometer:micrometer-registry-prometheus:1.17.2")
+    implementation("net.logstash.logback:logstash-logback-encoder:9.0")
     implementation("org.apache.poi:poi-ooxml:5.5.1")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
@@ -49,8 +50,9 @@ tasks {
     configurations.all {
         resolutionStrategy.eachDependency {
             when (requested.group) {
+                "com.azure" if (requested.name == "azure-core") -> useVersion("1.60.0")
                 "com.fasterxml.jackson.core" if (requested.name == "jackson-core" || requested.name == "jackson-databind")
-                    -> useVersion("2.22.3")
+                    -> useVersion("2.22.4")
                 "com.fasterxml.jackson.core" if requested.name == "jackson-annotations" -> useVersion("2.22")
                 "tools.jackson.core" -> useVersion("3.2.4")
                 "ch.qos.logback" -> useVersion("1.6.5")
