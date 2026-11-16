@@ -1,12 +1,12 @@
 group = "no.nav.pensjon"
 version = "1"
 
-val commonsLang3Version = "3.21.0"
+val commonsLang3Version = "3.22.0"
 
 plugins {
     kotlin("jvm") version "2.4.21"
     kotlin("plugin.spring") version "2.4.21"
-    id("org.springframework.boot") version "4.1.1"
+    id("org.springframework.boot") version "4.1.2"
     id("io.spring.dependency-management") version "1.1.7"
 }
 
