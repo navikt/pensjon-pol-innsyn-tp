@@ -1,12 +1,12 @@
 group = "no.nav.pensjon"
 version = "1"
 
-val commonsLang3Version = "3.21.0"
+val commonsLang3Version = "3.22.0"
 
 plugins {
     kotlin("jvm") version "2.4.21"
     kotlin("plugin.spring") version "2.4.21"
-    id("org.springframework.boot") version "4.1.1"
+    id("org.springframework.boot") version "4.2.0"
     id("io.spring.dependency-management") version "1.1.7"
 }
 
@@ -21,7 +21,7 @@ repositories {
 dependencies {
     implementation(kotlin("reflect"))
     implementation("com.azure.spring:spring-cloud-azure-starter-active-directory:7.4.0")
-    implementation("io.micrometer:micrometer-registry-prometheus:1.17.2")
+    implementation("io.micrometer:micrometer-registry-prometheus:1.18.0")
     implementation("net.logstash.logback:logstash-logback-encoder:9.0")
     implementation("org.apache.poi:poi-ooxml:5.5.1")
     implementation("org.springframework.boot:spring-boot-starter-web")
